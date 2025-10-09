@@ -192,6 +192,10 @@ body {
     margin-right: 33px;
 }
 
+.cantidad-vueltas {
+    opacity: 0.8;
+}
+
 .time-focus {
     display: flex;
     width: 550px;
@@ -221,3 +225,20 @@ body {
     border: none;
 }
 
+.task-button {
+    font-family: 'Nunito';
+    opacity: 0.8;
+    color: white;
+    font-weight: bold;
+    border: dashed;
+    border-color: white;
+    margin-left: 300px;
+    width: 510px;
+    height: 65px;
+}
+
+.task-button:hover {
+    color: white;
+    border: white;
+    border: dashed;
+}
