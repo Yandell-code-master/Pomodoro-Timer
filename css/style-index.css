@@ -218,7 +218,7 @@ body {
 
 .linea-task {
     height: 3px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255, 0.4);
     margin-left: 303px;
     width: 503px;
     opacity: 1 !important;
@@ -230,15 +230,43 @@ body {
     opacity: 0.8;
     color: white;
     font-weight: bold;
-    border: dashed;
-    border-color: white;
-    margin-left: 300px;
-    width: 510px;
+    border: 2px dashed  rgb(255, 255, 255, 0.4) !important;
+    margin-left: 290px;
+    width: 505px;
     height: 65px;
 }
 
 .task-button:hover {
     color: white;
-    border: white;
-    border: dashed;
+    border: 2px dashed rgb(255, 255, 255, 0.4) !important;
+}
+
+.task-button:focus, 
+.task-button:active {
+    color: white !important;
+}
+
+.add-task {
+    background-color: white;
+    display: block;
+    width: 505px;
+    margin-left: 290px;
+    height: 300px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+}
+
+.quantity-pomodoros-input {
+    width: 100px;
+}
+
+.quantity-pomodoros-input::-webkit-inner-spin-button,
+.quantity-pomodoros-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.buttons-task-container {
+    margin-top: 155px;
+    background-color: red;
+    padding-left: 320px;
 }
