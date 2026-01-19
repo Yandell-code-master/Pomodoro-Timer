@@ -189,30 +189,33 @@ body {
 
 .vueltas {
     color: white;
-    margin-right: 33px;
+    margin-left: 490px;
 }
 
 .cantidad-vueltas {
     opacity: 0.8;
+    margin-left: 38px;
 }
 
 .time-focus {
     display: flex;
-    width: 550px;
+    width: 503px;
+    margin-left: 303px;
     align-items: center;
+    padding: 0;
 }
 
 .btn-three-dots {
-    margin-left: 426px;
+    margin-left: 425px;
     color: white;
     background-color: rgb(229, 115, 115, 0.4);
+
 }
 
 .txt-task {
     color: white;
     margin-top: 0; 
     margin-bottom: 0;
-    margin-left: 7px;
     font-size: 20px;
 }
 
@@ -248,12 +251,46 @@ body {
 
 .add-task {
     background-color: white;
-    display: block;
+    display: none;
     width: 505px;
     margin-left: 290px;
     height: 300px;
     border-radius: 7px;
     margin-bottom: 20px;
+    position: relative;
+}
+
+.add-task input::placeholder {
+    color: gray;
+}
+
+.add-task input[type="text"] {
+    width: 100%;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    height: 50px;
+}
+
+.add-task input[type="text"]:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.add-task .quantity-pomodoros-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.add-task .d-flex {
+    gap: 10px;
+}
+
+.add-task .btn {
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .quantity-pomodoros-input {
@@ -266,7 +303,35 @@ body {
 }
 
 .buttons-task-container {
-    margin-top: 155px;
-    background-color: red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #cccccc;
     padding-left: 320px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.task-display {
+    margin-left: 303px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 7px;
+    width: 503px;
+}
+
+.task-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(186, 73, 73);
+    margin: 0;
+}
+
+.task-pomodoros {
+    font-size: 14px;
+    color: rgb(186, 73, 73);
+    margin: 5px 0 0 0;
 }
