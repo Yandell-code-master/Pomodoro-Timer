@@ -6,8 +6,6 @@
     margin-top: 200px;
     width: 300px;
     height: 500px;
-
-    border: solid 2px;
 }
 
 .title {
@@ -46,4 +44,64 @@
     height: 50px;
     width: 330px;
     border: solid 1px gray;
+}
+
+.left-line {
+    border: solid 1px black;
+    width: 123px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.rigth-line {
+    border: solid 1px black;
+    width: 123px;
+    margin-left: auto;
+    margin-right: auto;
+}   
+
+.text-separetion {
+    color: black;
+}
+
+.email-text {
+    color: black;
+    padding-left: 20px !important;
+}
+
+.email-textfield {
+    width: 325px !important;
+    height: 40px;
+    margin-left: 9px;
+    border-radius: 5px;
+    border: none;
+    background-color: #efefef;
+}   
+
+.email-textfield:focus {
+    outline: none;
+}
+
+.send-data {
+    width: 325px !important;
+    margin-left: 9px !important;
+    height: 40px;
+    margin-top: 20px;
+    border-radius: 7px;
+    border: none;
+    background-color: #45474b;
+    color: white;
+}
+
+.send-data:hover {
+    background-color: #535356;
+}
+
+.log-in-text {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.already-account-text {
+    font-weight: bold;
 }

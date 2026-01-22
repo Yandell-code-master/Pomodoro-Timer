@@ -9,9 +9,10 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +24,7 @@ public class User {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "email")
+    private String email;
 }

@@ -22,10 +22,12 @@ public class UserController {
             this.userService = userService;
         }
 
-        @GetMapping
-        public ResponseEntity<UserDTO> createUser(User newUser) {
+        @GetMapping("/save-user")
+        public ResponseEntity<UserDTO> saveUser(User newUser) {
             UserDTO userDTO  = userService.saveUser(newUser);
 
             return ResponseEntity.ok().body(userDTO);
         }
+
+
 }
