@@ -19,4 +19,6 @@ public class UserFromEmail extends User{
     @Column(name = "password_hash")
     private String passwordHash;
 
+    @Column(name = "status", nullable = false)
+    private String status;
 }

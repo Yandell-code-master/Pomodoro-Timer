@@ -16,6 +16,6 @@ import lombok.Setter;
 @Table(name = "users_google")
 public class UserFromGoogle extends User{
     
-    @Column(name = "google-_d")
+    @Column(name = "google_id")
     private String googleId;
 }

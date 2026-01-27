@@ -1,13 +1,13 @@
 package com.backend.code.pomodoro_timer.controller;
 
+import com.backend.code.pomodoro_timer.dto.PasswordChangeDTO;
 import com.backend.code.pomodoro_timer.dto.UserDTO;
 import com.backend.code.pomodoro_timer.model.User;
+import com.backend.code.pomodoro_timer.model.UserFromEmail;
 import com.backend.code.pomodoro_timer.service.UserService;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +22,19 @@ public class UserController {
             this.userService = userService;
         }
 
-        @GetMapping("/save-user")
-        public ResponseEntity<UserDTO> saveUser(User newUser) {
-            UserDTO userDTO  = userService.saveUser(newUser);
+        @GetMapping("/save-user-email")
+        public ResponseEntity<UserDTO> saveUserFromEmail(@RequestBody UserFromEmail newUserFromEmail) {
+            UserDTO userDTO =  userService.saveUserFromEmail(newUserFromEmail);
+
+            return ResponseEntity.ok(userDTO);
+        }
+
+
+        @PostMapping("set-password")
+        public ResponseEntity<UserDTO> updatePassword(@RequestBody PasswordChangeDTO passwordChangeDTO) {
+            UserDTO userDTO = userService.updatePassword(passwordChangeDTO.getPassword(), passwordChangeDTO.getToken());
 
             return ResponseEntity.ok().body(userDTO);
         }
-
 
 }

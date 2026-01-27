@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,7 +21,10 @@ public abstract class User {
 
     @Column(name = "tasks")
     @OneToMany(mappedBy = "user")
-    private ArrayList<Task> tasks;
+    private List<Task> tasks;
+
+    @OneToMany(mappedBy = "user")
+    private Token resetPasswordToken;
 
     @Column(name = "name")
     private String name;
