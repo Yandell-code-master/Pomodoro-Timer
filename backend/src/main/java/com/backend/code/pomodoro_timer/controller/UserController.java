@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:8000")
 public class UserController {
 
         private final UserService userService;
@@ -22,15 +23,15 @@ public class UserController {
             this.userService = userService;
         }
 
-        @GetMapping("/save-user-email")
-        public ResponseEntity<UserDTO> saveUserFromEmail(@RequestBody UserFromEmail newUserFromEmail) {
-            UserDTO userDTO =  userService.saveUserFromEmail(newUserFromEmail);
+        @PostMapping("/save-user-email")
+        public ResponseEntity<UserDTO> saveUserFromEmail(@RequestBody UserFromEmail userFromEmail) {
+            UserDTO userDTO =  userService.saveUserFromEmail(userFromEmail);
 
             return ResponseEntity.ok(userDTO);
         }
 
 
-        @PostMapping("set-password")
+        @PostMapping("/set-password")
         public ResponseEntity<UserDTO> updatePassword(@RequestBody PasswordChangeDTO passwordChangeDTO) {
             UserDTO userDTO = userService.updatePassword(passwordChangeDTO.getPassword(), passwordChangeDTO.getToken());
 

@@ -24,7 +24,7 @@ public abstract class User {
     private List<Task> tasks;
 
     @OneToMany(mappedBy = "user")
-    private Token resetPasswordToken;
+    private List<Token> resetPasswordTokens;
 
     @Column(name = "name")
     private String name;

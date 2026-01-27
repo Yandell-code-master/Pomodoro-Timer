@@ -1,6 +1,7 @@
 package com.backend.code.pomodoro_timer.service;
 
 import com.backend.code.pomodoro_timer.dto.UserDTO;
+import com.backend.code.pomodoro_timer.exception.ErrorSendingEmail;
 import com.backend.code.pomodoro_timer.exception.TokenExpiredException;
 import com.backend.code.pomodoro_timer.mapper.Mapper;
 import com.backend.code.pomodoro_timer.model.Token;
@@ -56,21 +57,22 @@ public class UserService {
         UUID randomToken = UUID.randomUUID();
         String tokenToSend = randomToken.toString();
 
+        // Creating the token for the new user
         Token token = Token.builder()
                 .expires_date(LocalTime.now().plusHours(2)) // expires two hours after the creation time
                 .user(userFromEmail)
                 .token(BCrypt.hashpw(tokenToSend, BCrypt.gensalt())).build();
 
-        // saving the token in the bd
-        tokenRepository.save(token);
+        // Send the email to verify the email and let the user set his new password
+        if (sendEmailToVerify(userFromEmail.getEmail(), tokenToSend)) {
+            // Saving the new user and his new token
+            UserDTO userDTO = Mapper.toDTO(userFromEmailRepository.save(userFromEmail));
+            tokenRepository.save(token);
 
-        // I think this line have to go
-        userFromEmail.setPasswordHash(BCrypt.hashpw(userFromEmail.getPasswordHash(), BCrypt.gensalt()));
-
-
-        sendEmailToVerify(userFromEmail.getEmail(), tokenToSend);
-
-        return Mapper.toDTO(userFromEmailRepository.save(userFromEmail));
+            return userDTO;
+        } else {
+            throw new ErrorSendingEmail("There was an error sending the email");
+        }
     }
 
     public UserDTO updateUser(Long id, User userUpdated) {
@@ -83,18 +85,22 @@ public class UserService {
         return toDTO(userToUpdate);
     }
 
-    public UserDTO updatePassword(String newPassword, String token) {
+    public UserDTO updatePassword(String newPassword, String tokenToFind) {
         List<User> users = getUsers();
 
         for(User user : users) {
-            if(user.getResetPasswordToken().getToken().equals(token)) {
-                if (user instanceof UserFromEmail) {
-                    UserFromEmail userFromEmail = (UserFromEmail) user;
+            List<Token> tokens = user.getResetPasswordTokens();
 
-                    userFromEmail.setPasswordHash(newPassword);
-                    tokenRepository.delete(userFromEmail.getResetPasswordToken());
+            for (Token token : tokens) {
+                if(BCrypt.checkpw(tokenToFind, token.getToken())) {
+                    if (user instanceof UserFromEmail) {
+                        UserFromEmail userFromEmail = (UserFromEmail) user;
 
-                    return Mapper.toDTO(userFromEmailRepository.save(userFromEmail));
+                        userFromEmail.setPasswordHash(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+                        userFromEmail = userFromEmailRepository.save(userFromEmail);
+                        tokenRepository.delete(token);
+                        return Mapper.toDTO(userFromEmail);
+                    }
                 }
             }
         }
@@ -103,17 +109,17 @@ public class UserService {
     }
 
 
-    public void sendEmailToVerify(String email, String token) {
+    public boolean sendEmailToVerify(String email, String token) {
         // getting the environment variable from .env file
         Dotenv dotenv = Dotenv.load();
         String apiKey = dotenv.get("RESEND_API_KEY");
 
         Resend resend = new Resend(apiKey);
 
-        String URLSetPassword = "http://localhost:8080/set-password.html?token=" + token;
+        String URLSetPassword = "http://localhost:8000/set-password.html?token=" + token;
 
         CreateEmailOptions emailConfiguration = CreateEmailOptions.builder()
-                .from("Support just making testing")
+                .from("Support <onboarding@resend.dev>")
                 .to(email)
                 .subject("Reset your password")
                 .html("<strong>Hi!</strong><br>" +
@@ -124,8 +130,10 @@ public class UserService {
 
         try {
             CreateEmailResponse data = resend.emails().send(emailConfiguration);
+            return true;
         } catch (ResendException e) {
             e.printStackTrace();
+            return false;
         }
     }
 }

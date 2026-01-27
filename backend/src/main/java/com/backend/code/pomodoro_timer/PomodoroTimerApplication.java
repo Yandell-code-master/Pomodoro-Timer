@@ -11,9 +11,6 @@ public class PomodoroTimerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PomodoroTimerApplication.class, args);
-
-		UUID uuid = Generators.nameBasedGenerator().generate("usuario123");
-		System.out.println(uuid);
 	}
 
 }

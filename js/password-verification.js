@@ -14,17 +14,24 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!confirmPasswordEquality(passwordTextField.value, passwordConfirmationTextField.value)) {
                 warningText.innerText = "Passwords are different";
                 warningText.style.display = "block"
-            } 
-
-            const URL = "http://localhost:8080/users/set-password"
-            const data = {
-                password : passwordTextField.value
             }
 
-            fetch (URL, {
-                method : 'POST'
-                body : 
-            })
+            const URL = "http://localhost:8080/users/set-password"
+
+            const data = {
+                password : passwordTextField.value,
+                token : getToken()
+            }
+
+            console.log(getToken());
+
+            fetch(URL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers : {
+                    'Content-Type' : 'application/json'
+                }
+            });
         }
     });
 
@@ -42,6 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return false;
+    }
+
+    function getToken() {
+            const queryParams = window.location.search;
+            const urlParams = new URLSearchParams(queryParams);
+            const token = urlParams.get('token');
+
+            return token;
     }
 });
 
