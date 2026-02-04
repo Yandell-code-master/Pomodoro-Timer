@@ -2,10 +2,8 @@ package com.backend.code.pomodoro_timer.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CollectionIdMutability;
-
 import java.time.LocalTime;
-import java.util.Date;
+
 
 @Entity
 @Table(name = "token")

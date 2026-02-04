@@ -28,6 +28,4 @@ public class TaskController {
 
         return ResponseEntity.ok().body(taskList);
     }
-
-
 }

@@ -1,10 +1,16 @@
 package com.backend.code.pomodoro_timer.controller;
 
+import com.backend.code.pomodoro_timer.dto.JSONWebToken;
+import com.backend.code.pomodoro_timer.dto.LogInDTO;
 import com.backend.code.pomodoro_timer.dto.PasswordChangeDTO;
 import com.backend.code.pomodoro_timer.dto.UserDTO;
+import com.backend.code.pomodoro_timer.exception.UserAlreadyExistException;
 import com.backend.code.pomodoro_timer.model.User;
 import com.backend.code.pomodoro_timer.model.UserFromEmail;
+import com.backend.code.pomodoro_timer.model.UserFromGoogle;
 import com.backend.code.pomodoro_timer.service.UserService;
+import com.resend.core.exception.ResendException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +30,15 @@ public class UserController {
         }
 
         @PostMapping("/save-user-email")
-        public ResponseEntity<UserDTO> saveUserFromEmail(@RequestBody UserFromEmail userFromEmail) {
-            UserDTO userDTO =  userService.saveUserFromEmail(userFromEmail);
+        public ResponseEntity<UserDTO> saveUserFromEmail(@RequestBody UserFromEmail userFromEmail) throws ResendException {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(userService.saveUserFromEmail(userFromEmail));
+        }
 
-            return ResponseEntity.ok(userDTO);
+        @PostMapping("/save-user-google")
+        public ResponseEntity<?> saveUserFromGoogle(@RequestBody UserFromGoogle userFromGoogle) {
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(userService.saveUserFromGoogle(userFromGoogle));
         }
 
 
@@ -38,4 +49,9 @@ public class UserController {
             return ResponseEntity.ok().body(userDTO);
         }
 
+        @PostMapping("/log-in-email")
+        public ResponseEntity<JSONWebToken> logInUserEmail(LogInDTO logInDTO) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(userService.LogInUserEmail(logInDTO));
+        }
 }

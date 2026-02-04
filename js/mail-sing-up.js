@@ -6,20 +6,23 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
         const URL = "http://localhost:8080/users/save-user-email";
         const email = mailInput.value;
+        mailInput.value = "";
 
         const userFromEmail = {
-            name : "newUser",
-            passwordHash : "PENDING",
-            email : email,
-            status : "PENDING"
+            name: "newUser",
+            passwordHash: "",
+            email: email,
+            status: "PENDING"
         }
 
         fetch(URL, {
-            method : 'POST',
-            body : JSON.stringify(userFromEmail),
-            headers : {
-                'Content-Type' : 'application/json'
+            method: 'POST',
+            body: JSON.stringify(userFromEmail),
+            headers: {
+                'Content-Type': 'application/json'
             }
         });
+
+        window.location.href = "http://localhost:8000/activate-page.html";
     });
 });

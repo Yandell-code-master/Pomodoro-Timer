@@ -1,0 +1,12 @@
+body {
+    background-color: rgb(186, 73, 73);
+}
+
+.informative-text {
+    width: 500px;
+    color: white;
+}
+
+.main-container {
+    margin-top: 200px;
+}
