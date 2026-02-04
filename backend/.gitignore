@@ -34,4 +34,4 @@ build/
 
 ### Enviroment Variables ###
 .env
-.application.properties
+./src/main/resources/application.properties
