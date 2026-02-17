@@ -1,12 +1,11 @@
 package com.backend.code.pomodoro_timer.controller;
 
 import com.backend.code.pomodoro_timer.dto.TaskDTO;
+import com.backend.code.pomodoro_timer.model.Task;
 import com.backend.code.pomodoro_timer.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +22,24 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<TaskDTO>> getTaskById(Long id) {
+    public ResponseEntity<List<TaskDTO>> getTaskById(@PathVariable Long id) {
         List<TaskDTO> taskList = taskService.getTasksById(id);
 
         return ResponseEntity.ok().body(taskList);
+    }
+
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(@RequestBody Task task) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(taskService.saveTask(task));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+        System.out.println("Hola");
+        taskService.deleteTask(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }

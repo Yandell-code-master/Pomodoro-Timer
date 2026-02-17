@@ -3,13 +3,14 @@ package com.backend.code.pomodoro_timer.dto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
 @Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @SuperBuilder
-public class UserDTO {
+public class UserFromEmailDTO extends UserDTO{
 
-    private Long id;
+    private String email;
+    private String picture;
     private String name;
 }

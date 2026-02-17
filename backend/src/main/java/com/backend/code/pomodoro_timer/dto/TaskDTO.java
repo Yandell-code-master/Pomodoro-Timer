@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class TaskDTO {
 
+    private Long id;
     private Integer pomodoros;
     private String name;
     private String note;

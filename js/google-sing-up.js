@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", event => {
     let tokenClient;
 
     const initGoogle = () => {

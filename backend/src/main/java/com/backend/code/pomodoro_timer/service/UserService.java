@@ -1,8 +1,14 @@
 package com.backend.code.pomodoro_timer.service;
 
-import com.backend.code.pomodoro_timer.dto.JSONWebToken;
-import com.backend.code.pomodoro_timer.dto.LogInDTO;
-import com.backend.code.pomodoro_timer.dto.UserDTO;
+/*Algo interesante de lo que sucede con los imports cuando utilizas MAVEN es que ya no se hacen como antes cuando se utilizaba un IDE normal como geany
+* ahora si ves los imports son así de grandes ya que básicamente es la combinación entre el groupId y el artifactId. Utiliza la carpeta java como si fuera la raíz*/
+import com.backend.code.pomodoro_timer.util.CloudinaryConfiguration;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
+import com.cloudinary.utils.ObjectUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.backend.code.pomodoro_timer.client.GoogleIntegrationService;
+import com.backend.code.pomodoro_timer.dto.*;
 import com.backend.code.pomodoro_timer.exception.*;
 import com.backend.code.pomodoro_timer.mapper.Mapper;
 import com.backend.code.pomodoro_timer.model.Token;
@@ -13,6 +19,8 @@ import com.backend.code.pomodoro_timer.repository.TokenRepository;
 import com.backend.code.pomodoro_timer.repository.UserFromEmailRepository;
 import com.backend.code.pomodoro_timer.repository.UserFromGoogleRepository;
 import com.backend.code.pomodoro_timer.repository.UserRepository;
+
+import java.io.IOException;
 import java.time.LocalTime;
 
 import com.backend.code.pomodoro_timer.util.JwtGenerator;
@@ -23,10 +31,13 @@ import com.resend.services.emails.model.CreateEmailResponse;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.transaction.Transactional;
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.web.accept.MediaTypeParamApiVersionResolver;
+import org.springframework.web.multipart.MultipartFile;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,13 +52,20 @@ public class UserService {
     private final UserFromEmailRepository userFromEmailRepository;
     private final TokenRepository tokenRepository;
     private final JwtGenerator jwtGenerator;
+    private final GoogleIntegrationService googleIntegrationService;
+    private final ObjectMapper objectMapper;
+    private final Cloudinary cloudinary;
 
-    public UserService(UserRepository userRepository, UserFromGoogleRepository userFromGoogleRepository, UserFromEmailRepository userFromEmailRepository, TokenRepository tokenRepository, JwtGenerator jwtGenerator) {
+    public UserService(UserRepository userRepository, UserFromGoogleRepository userFromGoogleRepository, UserFromEmailRepository userFromEmailRepository, TokenRepository tokenRepository, JwtGenerator jwtGenerator, GoogleIntegrationService googleIntegrationService, ObjectMapper objectMapper, Cloudinary cloudinary) {
         this.userRepository = userRepository;
         this.userFromGoogleRepository = userFromGoogleRepository;
         this.userFromEmailRepository = userFromEmailRepository;
         this.tokenRepository = tokenRepository;
         this.jwtGenerator = jwtGenerator;
+        this.googleIntegrationService = googleIntegrationService;
+        this.objectMapper = objectMapper;
+        this.cloudinary = cloudinary;
+
     }
 
     public List<User> getUsers() {
@@ -63,7 +81,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO saveUserFromEmail(UserFromEmail userFromEmail) throws ResendException{
+    public UserFromEmailDTO saveUserFromEmail(UserFromEmail userFromEmail) throws ResendException{
         UUID randomToken = UUID.randomUUID();
         String tokenToSend = randomToken.toString();
 
@@ -77,28 +95,39 @@ public class UserService {
                 .user(userFromEmail)
                 .token(BCrypt.hashpw(tokenToSend, BCrypt.gensalt())).build();
 
+        // All the new users have this default name
+        // Then the user can change the name easily from the web page
+        userFromEmail.setName("newUser");
+
         // Saving the new user and his new token
-        UserDTO userDTO = Mapper.toDTO(userFromEmailRepository.save(userFromEmail));
+        UserFromEmailDTO userFromEmailDTO = Mapper.toDTO(userFromEmailRepository.save(userFromEmail));
         tokenRepository.save(token);
 
         // Send the email to verify the email and let the user set his new password, can throw exception
         sendEmailToVerify(userFromEmail.getEmail(), tokenToSend);
 
-        return userDTO;
+        return userFromEmailDTO;
     }
 
-    public UserDTO updateUser(Long id, User userUpdated) {
-        User userToUpdate = userRepository.findById(id).get();
+    public UserDTO updateUser(Long id, Map<String, Object> dataUpdated) {
+        User userToUpdate = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFound("The user doesn't exist"));
 
-        userToUpdate.setName(userUpdated.getName());
-        userToUpdate.setTasks(userToUpdate.getTasks());
+        // Make the mapp of the new information. All the information is saved in the same User object
+        objectMapper.updateValue(userToUpdate, dataUpdated);
 
-        userRepository.save(userToUpdate);
-        return toDTO(userToUpdate);
+        User savedUser = userRepository.save(userToUpdate);
+
+        // Returning DTO depending on the type of User object
+        if (savedUser instanceof UserFromEmail) {
+            return Mapper.toDTO((UserFromEmail) savedUser);
+        } else {
+            return Mapper.toDTO(savedUser);
+        }
     }
 
     @Transactional // It is used to make a function a transaction, and the transactions are atomics
-    public UserDTO updatePassword(String newPassword, String tokenToFind) {
+    public UserFromEmailDTO updatePassword(String newPassword, String tokenToFind) {
 
                 // Getting the token
                 Token token = tokenRepository.findByToken(tokenToFind)
@@ -110,12 +139,12 @@ public class UserService {
 
                 // Changing the password and saving to the bd
                 // JPA update the bd automatically
+                ownerOfToken.setStatus("REGISTERED");
                 ownerOfToken.setPasswordHash(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
 
                 // Deleting the token because is one use token
                 tokenRepository.delete(token);
                 return Mapper.toDTO(ownerOfToken);
-
     }
 
 
@@ -152,6 +181,66 @@ public class UserService {
             throw new PasswordIncorrect("The password passed was incorrect");
         }
 
-        return new JSONWebToken(jwtGenerator.generateToken(userFromEmail.getName()));
+        return JSONWebToken.builder()
+                .jwt(jwtGenerator.generateToken(userFromEmail.getName()))
+                .build();
+    }
+
+    public JSONWebToken logInUserGoogle(LogInGoogleDTO logInGoogleDTO) {
+        userFromGoogleRepository.findByGoogleId(logInGoogleDTO.getUserFromGoogle().getGoogleId())
+                .orElseThrow(() -> new UserNotFound("The user doesn't exist"));
+
+        if (!googleIntegrationService.verifyToken(logInGoogleDTO.getJsonWebToken()).isValid()) {
+            throw new JsonWebTokenInvalidException("The token is invalid");
+        }
+
+        return logInGoogleDTO.getJsonWebToken();
+    }
+
+    public UserFromEmailDTO logInUserEmail(LogInDTO logInDTO) {
+        UserFromEmail userFromEmail = userFromEmailRepository.findByEmail(logInDTO.getEmail())
+                .orElseThrow(() -> new UserNotFound("The user doesn't exist"));
+
+        if (!BCrypt.checkpw(logInDTO.getPassword(), userFromEmail.getPasswordHash())) {
+            throw new PasswordIncorrect("The password inserted is incorrect");
+        }
+
+        return Mapper.toDTO(userFromEmail);
+    }
+
+    public String uploadPhoto(Long id, MultipartFile photo) {
+        try {
+            // 1. Subir el archivo usando sus bytes directamente
+            // No necesitas guardarlo en tu PC, Cloudinary lee los bytes de la RAM
+            Map uploadResult = cloudinary.uploader().upload(photo.getBytes(), ObjectUtils.asMap(
+                    "folder", "users",
+                    "resource_type", "auto"
+            ));
+
+            // 2. Extraer la URL que Cloudinary nos generó al subirlo
+            String url = (String) uploadResult.get("secure_url");
+
+            // Update the user with the new URL image
+            UserFromEmail userFromEmail = userFromEmailRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("The user doesn't exist"));
+
+            userFromEmail.setPicture(url);
+            userRepository.save(userFromEmail);
+
+            return url;
+        } catch (IOException e) {
+            throw new RuntimeException("Error al leer los bytes del archivo", e);
+        }
+    }
+
+    public UserFromEmailDTO getUserFromEmail(Long id) {
+        return Mapper.toDTO(userFromEmailRepository.findById(id).orElseThrow(() -> new NotFoundException("The user doesn't exist")));
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFound("The user doesn't exist"));
+
+        userRepository.deleteById(id);
     }
 }

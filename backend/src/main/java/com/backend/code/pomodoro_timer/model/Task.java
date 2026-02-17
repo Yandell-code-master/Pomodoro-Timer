@@ -26,10 +26,10 @@ public class Task {
         @Column(name = "name", nullable = false)
         private String name;
 
-        @Column(name = "note", nullable = false)
+        @Column(name = "note")
         private String note;
 
         @ManyToOne
-        @JoinColumn(name = "user_id", nullable = false)
+        @JoinColumn(name = "user_id")
         private User user;
 }

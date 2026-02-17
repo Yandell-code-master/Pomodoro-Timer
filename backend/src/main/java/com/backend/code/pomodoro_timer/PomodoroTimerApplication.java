@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.UUID;
 
 @SpringBootApplication
-public class PomodoroTimerApplication {
+public class 	PomodoroTimerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PomodoroTimerApplication.class, args);

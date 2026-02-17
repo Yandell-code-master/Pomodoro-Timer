@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     btnAddTask = document.getElementById("btn-add-task");
     createTaskContainer = document.getElementById("create-task");
     btnSaveTask = document.getElementById("save-task");
@@ -7,44 +7,57 @@ document.addEventListener("DOMContentLoaded", function() {
     btnDown = document.querySelector(".btn-down");
     numberInput = document.querySelector(".quantity-pomodoros-input");
 
-    btnAddTask.addEventListener("click", function() {
+    btnAddTask.addEventListener("click", function () {
+        if (!localStorage.getItem("isLoged")) {
+            alert("You have to sing up first");
+            return;
+        }
+
         btnAddTask.style.display = "none";
         createTaskContainer.style.display = "block";
     });
 
-    btnSaveTask.addEventListener("click", function() {
+    btnSaveTask.addEventListener("click", async function () {
+        const URL_BACKEND = "http://localhost:8080/tasks"
         let taskName = document.querySelector('.add-task input[type="text"]').value.trim();
         let pomodoros = numberInput.value;
-        if (taskName !== '') {
-            // Create task display container
-            let taskContainer = document.createElement('div');
-            taskContainer.className = 'task-display';
-            taskContainer.innerHTML = `<p class="task-name">${taskName}</p><p class="task-pomodoros">Pomodoros: ${pomodoros}</p>`;
-            // Insert after .linea-task
-            let lineaTask = document.querySelector('.linea-task');
-            lineaTask.insertAdjacentElement('afterend', taskContainer);
-            // Hide form, show button
-            createTaskContainer.style.display = "none";
-            btnAddTask.style.display = "block";
-            // Clear inputs
-            document.querySelector('.add-task input[type="text"]').value = '';
-            numberInput.value = '1';
-        } else {
-            alert('Please enter a task name.');
+        let jsonUser = localStorage.getItem("userData");
+        let task = {
+            name: taskName,
+            pomodoros: pomodoros,
+            user: JSON.parse(jsonUser)
         }
+
+        if (taskName == '') {
+            alert('Please enter a task name.');
+            return;
+        }
+
+        const savingTaskResponse = await fetch(URL_BACKEND, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
+        })
+
+        const taskSaved = await savingTaskResponse.json();
+        const lineaTask = document.querySelector('.linea-task');
+
+        renderTask(taskSaved.id, taskSaved.name, taskSaved.pomodoros, lineaTask);
     });
 
-    btnCacelTask.addEventListener("click", function() {
+    btnCacelTask.addEventListener("click", function () {
         createTaskContainer.style.display = "none";
         btnAddTask.style.display = "block";
     });
 
-    btnUp.addEventListener("click", function() {
+    btnUp.addEventListener("click", function () {
         let current = parseInt(numberInput.value) || 1;
         numberInput.value = current + 1;
     });
 
-    btnDown.addEventListener("click", function() {
+    btnDown.addEventListener("click", function () {
         let current = parseInt(numberInput.value) || 1;
         if (current > 1) {
             numberInput.value = current - 1;

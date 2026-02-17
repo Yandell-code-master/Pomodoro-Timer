@@ -33,4 +33,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleNotFoundException(PasswordIncorrect ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(JsonWebTokenInvalidException.class)
+    public ResponseEntity<String> handelJsonWebTokenInvalidException(JsonWebTokenInvalidException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }

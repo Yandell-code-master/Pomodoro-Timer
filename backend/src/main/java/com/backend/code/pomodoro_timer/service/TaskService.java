@@ -62,12 +62,9 @@ public class TaskService {
     }
 
     public void deleteTask(Long id) {
-        Optional<Task> optionalTask = taskRepository.findById(id);
+        taskRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("The task doesn't exist"));
 
-        if (!optionalTask.isPresent()) {
-            throw new NotFoundException("Task doesn't exist");
-        }
-
-        taskRepository.delete(optionalTask.get());
+        taskRepository.deleteById(id);
     }
 }

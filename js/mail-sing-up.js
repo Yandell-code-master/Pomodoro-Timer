@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", event => {
+    event.preventDefault();
+
     const form = document.getElementById("email-form");
     const mailInput = document.getElementById("email-input");
 

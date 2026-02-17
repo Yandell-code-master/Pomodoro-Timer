@@ -209,7 +209,6 @@ body {
     margin-left: 425px;
     color: white;
     background-color: rgb(229, 115, 115, 0.4);
-
 }
 
 .txt-task {
@@ -321,6 +320,39 @@ body {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 7px;
     width: 503px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-display-content {
+    flex-grow: 1;
+    padding-left: 10px;
+}
+
+.btn-delete-task {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.btn-delete-task:hover {
+    background-color: #c82333;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.4);
+}
+
+.btn-delete-task i {
+    font-size: 18px;
 }
 
 .task-name {
@@ -334,4 +366,40 @@ body {
     font-size: 14px;
     color: rgb(186, 73, 73);
     margin: 5px 0 0 0;
+}
+
+.three-dot-btn {
+    border: none;
+}
+
+.user-image {
+    width: 31px;
+    height: 30px;
+    border-radius: 25px;
+}
+
+.modal-configuration {
+    margin-left: 615px;
+    margin-top: 70px;
+}
+
+.card-user-name {
+    border: none;
+    outline: none;
+    font-size: 25px;
+    width: 308px;
+    margin-bottom: 7px;
+}
+
+.card-line-information {
+    margin-top: 0px;
+}
+
+.card-information-img {
+    height: 100px;
+    width: 120px;
+}
+
+.card-information-img:hover {
+    opacity: 0.4;
 }

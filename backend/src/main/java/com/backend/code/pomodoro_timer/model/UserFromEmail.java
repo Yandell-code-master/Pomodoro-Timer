@@ -21,4 +21,7 @@ public class UserFromEmail extends User{
 
     @Column(name = "status", nullable = false)
     private String status;
+
+    @Column(name = "picture", length = 1000)
+    private String picture;
 }

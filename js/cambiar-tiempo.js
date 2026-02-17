@@ -1,78 +1,63 @@
-tiempo = document.getElementById("tiempo");
-btnIniciar = document.getElementById("btn-iniciar");
-btnPomodoro = document.getElementById("btn-pomodoro");
-btnSBreak = document.getElementById("btn-sbreak");
-btnLBreak = document.getElementById("btn-lbreak");
+let tiempo = document.getElementById("tiempo");
+let btnIniciar = document.getElementById("btn-iniciar");
+let btnPomodoro = document.getElementById("btn-pomodoro");
+let btnSBreak = document.getElementById("btn-sbreak");
+let btnLBreak = document.getElementById("btn-lbreak");
 
-active = false;
+let active = false;
+let interval = null;
+let tiempoInicial = "25:00"; // Guardamos el valor para resetear al terminar
 
 document.addEventListener("DOMContentLoaded", function () {
-    interval = null;
-
-    // Cuando se aprieta el boton se activa el cronometro o se desactiva
     btnIniciar.addEventListener("click", function () {
         if (!active) {
-            interval = setInterval(restarTiempo, 100); // Se ejecuta cada 1 segundo
+            // Cambiamos a 1000ms (1 segundo real)
+            interval = setInterval(restarTiempo, 1000);
             active = true;
         } else {
-            active = false;
-            clearInterval(interval);
+            pausarCronometro();
         }
     });
 
-    btnPomodoro.addEventListener("click", () => {
-        clearInterval(interval);
-        setCantidadTiempo("25");
-    });
-
-    btnSBreak.addEventListener("click", function() {
-        clearInterval(interval);
-        setCantidadTiempo("05");   
-    });
-
-    btnLBreak.addEventListener("click", () => {
-        clearInterval(interval);
-        setCantidadTiempo("15");
-    });
+    btnPomodoro.addEventListener("click", () => configuracionInicial("25:00"));
+    btnSBreak.addEventListener("click", () => configuracionInicial("05:00"));
+    btnLBreak.addEventListener("click", () => configuracionInicial("15:00"));
 });
 
-function setCantidadTiempo(minutos) {
-    tiempo.innerText = minutos + ":00";
+function configuracionInicial(valor) {
+    pausarCronometro();
+    tiempoInicial = valor; // Actualizamos el valor de reset
+    tiempo.innerText = valor;
 }
 
-// Le resta un segundo al cronometro y lo cambia en el texto que sale en la página
+function pausarCronometro() {
+    active = false;
+    clearInterval(interval);
+}
+
 function restarTiempo() {
-    tiempo = document.getElementById("tiempo");
-    minutos = tiempo.innerText.substring(0, 2);
-    segundos = tiempo.innerText.substring(3, 5);
+    let tiempoTexto = tiempo.innerText;
+    let minutos = parseInt(tiempoTexto.substring(0, 2));
+    let segundos = parseInt(tiempoTexto.substring(3, 5));
 
-    if (segundos == "00") {
-        segundos = "59";
-        minutos = String(Number(minutos) - 1);
+    // Lógica de término
+    if (minutos === 0 && segundos === 0) {
+        pausarCronometro();
+        tiempo.innerText = tiempoInicial;
+        cambiarNoPresionadoEstilo(btnIniciar);
+        return;
+    }
 
-        [minutos, segundos] = agregarCeros(minutos, segundos);
+    if (segundos === 0) {
+        segundos = 59;
+        minutos--;
     } else {
-        segundos = String(Number(segundos) - 1);
-
-        [minutos, segundos] = agregarCeros(minutos, segundos);
+        segundos--;
     }
 
-    tiempo.innerText = minutos + ":" + segundos;
+    // Formateo con ceros usando padStart (más limpio que la función manual)
+    let minStr = String(minutos).padStart(2, '0');
+    let segStr = String(segundos).padStart(2, '0');
+
+    tiempo.innerText = `${minStr}:${segStr}`;
 }
-
-
-// No introducir null en esta función como parámetros
-// Se le pasa los minutos y los segundos en forma de string y si está en unidad se le pone un cero 
-// A la izquierda
-function agregarCeros(minutos, segundos) {
-    if ((minutos != null) && (minutos.length == 1)) {
-        minutos = "0" + minutos;
-    } 
-
-    if ((segundos != null) && (segundos.length == 1)) {
-        segundos = "0" + segundos;
-    }
-
-    return [minutos, segundos];
-}
-

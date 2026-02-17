@@ -1,15 +1,16 @@
 package com.backend.code.pomodoro_timer.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class JSONWebToken {
 
     private String jwt;
+    private boolean isValid;
+
+
 }
