@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const user = JSON.parse(localStorage.getItem("userData"));
-    const URL_BACKEND = "http://localhost:8080/users/{}";
-    const inputName = document.getElementById("input-name");
+    const URL_BACKEND = `http://localhost:8080/users/${user.id}`;
+    const inputName = document.getElementById("user-name");
+    const saveChangesButton = document.getElementById("save-changes-buton");
 
-    inputName.addEventListener("click", async e => {
+    saveChangesButton.addEventListener("click", async e => {
         e.preventDefault();
 
         const userInfoToUpdate = {
@@ -26,5 +27,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         localStorage.removeItem("userData");
         localStorage.setItem("userData", userUpdated);
+        alert("The changes have been saved succefully")
     })
 });
