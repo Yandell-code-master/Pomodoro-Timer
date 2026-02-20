@@ -15,14 +15,13 @@ body {
 
 
 .nav-item {
-    font-size: 14px;
+    font-size: 9px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .nav-item-home {
     font-weight: bold;
-    font-size: 20px;
-    margin-top: 7px;
+    font-size: 10px;
 }
 
 .line {
@@ -194,10 +193,10 @@ body {
 }
 
 .three-dot-btn-nav {
-    display: flex;       /* Lo hacemos flex para centrar el icono dentro */
+    display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 5px;    /* Ajuste fino manual si lo ves muy abajo */
+    padding-top: 5px;
     padding-bottom: 5px;
 }
 
@@ -427,8 +426,8 @@ body {
 
 
 /*Esto de acá es una condiciona que dice que aplique estos estilos de 0 a 600 px de tamaño de pantalla*/
-@media (max-width: 2000px) {
-    
+@media (max-width: 600px) {
+
     /*Se busca los elementos con esta clase y se le aplica esta regla*/
     .btn-text {
         display: none;
@@ -443,7 +442,32 @@ body {
     display: flex;
     flex-direction: row;
     gap: 15px;
-    align-items: center; /* Esto alinea los iconos y el botón de puntos verticalmente */
-    margin-bottom: 0;    /* Quita márgenes por defecto de las listas */
-    padding-left: 0;
+    align-items: center;
+}
+
+/* Esta es la clase clave para el tamaño físico de los botones */
+.nav-configuration .nav-link {
+    font-size: 13px;
+    /* El tamaño del texto */
+    padding: 4px 8px;
+    /* Esto es lo que realmente los hace más pequeños */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    /* Espacio entre icono y texto */
+}
+
+/* Ajuste para los iconos internos */
+.nav-configuration .nav-link i {
+    font-size: 14px;
+    /* Tamaño del icono */
+    line-height: 1;
+}
+
+/* Ajuste para el botón de los tres puntos (el cuadrado de la derecha) */
+.three-dot-btn-nav {
+    padding: 2px 6px !important;
+    min-width: auto;
+    height: 30px;
+    /* Forzamos una altura pequeña */
 }
