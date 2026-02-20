@@ -1,5 +1,16 @@
 .boton-nav {
     background-color: rgb(229, 115, 115, 0.4);
+    /* Esto define el tamaño y la forma cuadrada/rectangular */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px !important; /* El primer número da la altura, el segundo el ancho */
+    border-radius: 4px !important; /* Un radio pequeño los hace ver modernos pero "cuadrados" */
+    gap: 6px;
+    border: none !important;
+    font-size: 13px; /* Tamaño de fuente equilibrado */
+    height: 32px;    /* Forzamos una altura fija para que todos sean iguales */
+    min-width: 40px; /* Evita que el botón de los puntos se colapse */
 }
 
 .boton-nav:hover {
@@ -15,19 +26,22 @@ body {
 
 
 .nav-item {
-    font-size: 9px;
+    font-size: 14px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .nav-item-home {
     font-weight: bold;
-    font-size: 10px;
+    font-size: 17px;
 }
 
 .line {
     margin-left: auto;
     margin-right: auto;
-    width: 90%;
+    width: 100%;          
+    max-width: 620px;     
+    margin-top: 7px;
+    opacity: 0.2;         
 }
 
 .contenedor-reloj {
@@ -196,8 +210,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
 }
 
 .txt-task {
@@ -394,7 +406,8 @@ body {
 }
 
 .nav-configuration {
-    width: 90%;
+    width: 100%;           
+    max-width: 620px;      
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
@@ -416,7 +429,7 @@ body {
 }
 
 .layout-wrapper {
-    width: 80%;
+    width: 100%;
 }
 
 
@@ -426,7 +439,7 @@ body {
 
 
 /*Esto de acá es una condiciona que dice que aplique estos estilos de 0 a 600 px de tamaño de pantalla*/
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 
     /*Se busca los elementos con esta clase y se le aplica esta regla*/
     .btn-text {
@@ -438,36 +451,15 @@ body {
     }
 }
 
+@media (max-width: 423px) {
+    .btn-text-home {
+        display: none;
+    }
+}
+
 .button-nav-list {
     display: flex;
     flex-direction: row;
     gap: 15px;
     align-items: center;
-}
-
-/* Esta es la clase clave para el tamaño físico de los botones */
-.nav-configuration .nav-link {
-    font-size: 13px;
-    /* El tamaño del texto */
-    padding: 4px 8px;
-    /* Esto es lo que realmente los hace más pequeños */
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    /* Espacio entre icono y texto */
-}
-
-/* Ajuste para los iconos internos */
-.nav-configuration .nav-link i {
-    font-size: 14px;
-    /* Tamaño del icono */
-    line-height: 1;
-}
-
-/* Ajuste para el botón de los tres puntos (el cuadrado de la derecha) */
-.three-dot-btn-nav {
-    padding: 2px 6px !important;
-    min-width: auto;
-    height: 30px;
-    /* Forzamos una altura pequeña */
 }
