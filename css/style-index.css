@@ -65,11 +65,12 @@ body {
     align-items: center;
     overflow: hidden; /* Evita que el contenido "empuje" hacia afuera */
 }
+
 .contenedor-btn-reloj {
-    width: 100%; /* Cambiado de 70% */
+    width: 100%; 
     display: flex;
-    justify-content: center; /* Centra los botones */
-    flex-wrap: wrap; /* Si no caben, saltan de línea en lugar de desbordarse */
+    justify-content: center; 
+    flex-wrap: wrap;
     gap: 5px;
     margin: 0 auto 15px auto;
 }
@@ -227,10 +228,12 @@ body {
 
 .time-focus {
     display: flex;
-    width: 503px;
-    margin-left: 303px;
+    justify-content: space-between;
     align-items: center;
-    padding: 0;
+    width: 95%;          
+    max-width: 480px;     
+    margin: 20px auto;      /* Centrado horizontal y margen vertical */
+    padding: 0;             /* Ajusta si necesitas espacio interno */
 }
 
 .three-dot-btn-nav {
