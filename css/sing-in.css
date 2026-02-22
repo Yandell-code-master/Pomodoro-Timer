@@ -20,7 +20,8 @@
 
 .data-container {
     background-color: white;
-    width: 370px;
+    max-width: 370px;
+    width: 95%;
     height: 300px;
     border-radius: 20px;
     margin-left: auto;
@@ -46,33 +47,33 @@
     border: solid 1px gray;
 }
 
-.left-line {
-    border: solid 1px black;
-    width: 123px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.rigth-line {
-    border: solid 1px black;
-    width: 123px;
-    margin-left: auto;
-    margin-right: auto;
-}   
-
 .text-separetion {
     color: black;
 }
 
 .email-text {
     color: black;
-    padding-left: 20px !important;
+    /* Usamos el mismo ancho máximo que los botones */
+    max-width: 325px !important;
+    width: 95% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    
+    /* Alineamos el texto a la izquierda */
+    text-align: left;
+    
+    /* Ajustes de espaciado */
+    padding: 0 !important; 
+    margin-top: 15px;
+    margin-bottom: 5px;
 }
 
 .email-textfield {
-    width: 325px !important;
+    max-width: 325px !important;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
     height: 40px;
-    margin-left: 9px;
     border-radius: 5px;
     border: none;
     background-color: #efefef;
@@ -83,8 +84,9 @@
 }
 
 .send-data {
-    width: 325px !important;
+    max-width: 325px !important;
     margin-left: 9px !important;
+    width: 95%;
     height: 40px;
     margin-top: 20px;
     border-radius: 7px;
@@ -111,9 +113,82 @@
     display: block;
     border: none;
     outline: none;
-    width: 325px;
+    max-width: 325px;
+    width: 95%;
     border-radius: 5px;
     height: 40px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Ajuste para los botones para que coincidan perfectamente */
+.btn-google, .send-data, .email-textfield {
+    display: block;
+    width: 95% !important;
+    max-width: 325px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.left-line, .rigth-line {
+    flex: 1;         /* Esto permite que la línea crezca hasta tocar el borde */
+    height: 0;       /* La línea se define por su borde, no por su altura */
+    border: none;
+    border-top: 1px solid #d1d1d1; /* El color de la línea */
+    margin: 0;       /* Eliminamos márgenes de Bootstrap que causan desbordamiento */
+    opacity: 1;
+}
+
+.separetion-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* IMPORTANTE: Estas 2 líneas deben ser iguales a las de .btn-google y .send-data */
+    width: 95%;
+    max-width: 325px; 
+    
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.text-separetion {
+    color: #777;
+    padding: 0 14px;
+    margin-bottom: 0;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* El separador usa Flexbox para estirar las líneas */
+.separetion-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 310px) {
+    .title-text {
+        display: none;
+    }
+
+    .title {
+        font-size: 70px;
+        font-weight: bold;
+    }
+
+    .btn-google-text {
+        font-size: 0px;
+    }
+
+    .text-btn-send-data {
+        font-size: 0px;
+    }
+
+    .text-btn-send-data::after {
+        content: "Send";
+        font-size: 20px;
+    }
 }
