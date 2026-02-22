@@ -95,7 +95,7 @@
                 #1
             </p>
 
-            <p>
+            <p class="time-focus-text">
                 Time to focus
             </p>
         </div>
@@ -108,9 +108,35 @@
 
             <button class="btn btn-three-dots boton-nav text-white"><i class="bi bi-three-dots-vertical"></i></button>
         </div>
+
+        <hr class="linea-task">
+
+        <div class="task-create-container">
+            <button type="button" class="btn task-button" id="btn-add-task"><i class="bi bi-plus-circle"></i> Add
+                Task</button>
+            <div class="container add-task row" id="create-task">
+                <input type="text" placeholder="What are you working on?">
+
+                <p>Est Pomodoros</p>
+
+                <div class="col-12 d-flex">
+                    <input type="number" class="form-control text-center quantity-pomodoros-input" value="1" min="1">
+                    <button type="button" class="btn btn-up"><i class="bi bi-caret-up-fill"></i></button>
+                    <button type="button" class="btn btn-down"><i class="bi bi-caret-down-fill"></i></button>
+                </div>
+
+                <div class="col-12 buttons-task-container">
+                    <button type="button" class="btn btn-save-task" id="save-task">Save</button>
+                    <button type="button" class="btn" id="cancel-task">Cancel</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <hr class="linea-task">
+
+
+
 
     <script src="js/btn-reloj.js"></script>
     <script src="js/iniciar-cronometro.js"></script>
