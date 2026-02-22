@@ -210,13 +210,19 @@ body {
 }
 
 .vueltas {
+    width: 60%;
     color: white;
-    margin-left: 490px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .cantidad-vueltas {
+    display: block;
     opacity: 0.8;
-    margin-left: 38px;
+    width: 60%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .time-focus {
@@ -243,8 +249,9 @@ body {
 .linea-task {
     height: 3px;
     background-color: rgb(255, 255, 255, 0.4);
-    margin-left: 303px;
-    width: 503px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
     opacity: 1 !important;
     border: none;
 }
