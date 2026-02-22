@@ -12,96 +12,76 @@
     <link rel="icon" type="image/svg+xml"
         href="resources/craiyon_180530_Quiero_un_check_el_cual_este_dentro_de_un_circulo_el_cual_tenga_color_rojo_de_fondo__y_quiero_que_el.png">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
 
-<body class="container">
-    <div class="container">
-        <nav class="container">
-            <ul class="nav nav-list container-nav">
-                <li class="nav-item">
-                    <a class="nav-link text-white nav-item-home" href="#"><i class="bi bi-check-circle"></i>
-                        Pomofocus</a>
-                </li>
+<body>
+    <div class="container lay-out-wrapper">
+        <nav class="container nav-bar navbar-expand-xl nav-configuration">
+            <div class="container" style="display: flex;">
+                <a class="nav-link navbar-brand text-white nav-item-home" href="#"><i class="bi bi-check-circle"></i>
+                    <span class="btn-text-home">Pomofocus</span></a>
 
-                <div class="list-btn-nav" id="list-btn-nav">
-                    <li class="nav-item">
-                        <a class="btn nav-link text-white boton-nav" href=""><i
-                                class="bi bi-bar-chart-fill"></i>Report</a>
-                    </li>
+                <div class="button-nav-list-wrapper">
+                    <ul class="navbar-nav flex-row button-nav-list">
+                        <li class="nav-item">
+                            <a class="nav-link btn text-white boton-nav" href=""><i
+                                    class="bi bi-bar-chart-fill"></i><span class="btn-text">Report</span></a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="btn nav-link text-white boton-nav"><i class="bi bi-gear"></i>
-                            Setting</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn text-white boton-nav"><i class="bi bi-gear"></i><span
+                                    class="btn-text">
+                                    Setting</span></a>
+                        </li>
 
-                    <li class="nav-item" id="sing-in-item">
-                        <a class="btn nav-link text-white boton-nav" href="./sing-in.html"><i
-                                class="bi bi-person-circle"></i>
-                            Sing in</a>
-                    </li>
+                        <li class="nav-item" id="sing-in-item">
+                            <a class="nav-link btn text-white boton-nav" href="./sing-in.html"><i
+                                    class="bi bi-person-circle"></i><span class="btn-text">
+                                    Sing in</span></a>
+                        </li>
 
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <a class="btn btn-secondary text-white boton-nav nav-item-more three-dot-btn three-dot-btn-nav"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false" id="three-dot-btn"><img
-                                    class="user-image" alt="user image" style="display: none;" id="user-image"><i
-                                    class="bi bi-three-dots-vertical" id="three-dots-icon"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-lg-end">
-                                <li><a class="dropdown-item" href="#" style="display: none;" id="account-dropdown-item"
-                                        data-bs-toggle="modal" data-bs-target="#account-information">Account</a></li>
-                                <li><a class="dropdown-item" href="log-in.html" id="log-in-dropdown-item">Login</a></li>
-                                <li><a class="dropdown-item" href="#">Premium</a></li>
-                                <li><a class="dropdown-item" href="#">Shortcuts</a></li>
-                                <li><a class="dropdown-item" href="#" style="display: none;"
-                                        id="log-out-dropdown-item">Logout</a></li>
-                                <li><a class="dropdown-item" href="#" style="display: none;"
-                                        id="delete-account-dropdown-item">Delete account</a></li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <div class="modal fade" id="account-information" tabindex="-1">
-                        <div class="modal-dialog modal-configuration">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="account-information">Account</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body row">
-                                    <input type="file" id="input-file" style="display: none;">
-                                    <img src="./resources/user-big-black.png" alt="user image" class="col-4 card-information-img" id="card-information-img">
-
-                                    <div class="col-8">
-                                        <input type="text" id="user-name" class="card-user-name">
-                                        <hr class="card-line-information">
-                                        <h2 id="user-email" class="account-card-font">mongeyandell</h2>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="save-changes-buton">Save changes</button>
-                                </div>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="nav-link btn text-white boton-nav nav-item-more three-dot-btn three-dot-btn-nav"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    id="three-dot-btn"><img class="user-image" alt="user image" style="display: none;"
+                                        id="user-image"><i class="bi bi-three-dots-vertical"
+                                        id="three-dots-icon"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-lg-end">
+                                    <li><a class="dropdown-item" href="#" style="display: none;"
+                                            id="account-dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#account-information">Account</a></li>
+                                    <li><a class="dropdown-item" href="log-in.html" id="log-in-dropdown-item">Login</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Premium</a></li>
+                                    <li><a class="dropdown-item" href="#">Shortcuts</a></li>
+                                    <li><a class="dropdown-item" href="#" style="display: none;"
+                                            id="log-out-dropdown-item">Logout</a></li>
+                                    <li><a class="dropdown-item" href="#" style="display: none;"
+                                            id="delete-account-dropdown-item">Delete account</a></li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
-            </ul>
+            </div>
         </nav>
 
-        <hr class="linea">
-
+        <hr class="line">
 
         <div class="container contenedor-reloj">
             <div class="container contenedor-btn-reloj">
-                <button class="btn btn-contenedor-reloj" id="btn-pomodoro">Pomodoro</button>
-                <button class="btn btn-contenedor-reloj" id="btn-sbreak">Short Break</button>
-                <button class="btn btn-contenedor-reloj" id="btn-lbreak">Long Break</button>
+                <button class="btn btn-contenedor-reloj" id="btn-pomodoro"><span
+                        class="pomodoro-text">Pomodoro</span></button>
+                <button class="btn btn-contenedor-reloj" id="btn-sbreak"><span class="short-break">Short
+                        Break</span></button>
+                <button class="btn btn-contenedor-reloj" id="btn-lbreak"><span class="long-break">Long
+                        Break</span></button>
             </div>
 
-            <p class="cronometro-txt" id="tiempo">25:00</p>
+            <div class="container container-numero-reloj">
+                <p class="cronometro-txt" id="tiempo">25:00</p>
+            </div>
 
             <div class="container contenedor-btn-iniciar" id="contenedor-btn-iniciar">
                 <button class="btn btn-iniciar btn-iniciar-desactivado" id="btn-iniciar">START</button>
@@ -109,48 +89,54 @@
                         class="bi bi-skip-end-fill"></i></button>
             </div>
         </div>
-    </div>
 
-    <div class="vueltas container">
-        <div class="cantidad-vueltas">
-            #1
+        <div class="vueltas container text-center ">
+            <p class="cantidad-vueltas">
+                #1
+            </p>
+
+            <p class="time-focus-text">
+                Time to focus
+            </p>
         </div>
 
-        <p>
-            Time to focus
-        </p>
-    </div>
 
-    <div class="container time-focus">
-        <p class="txt-task">
-            Task
-        </p>
+        <div class="container time-focus">
+            <p class="txt-task">
+                Task
+            </p>
 
-        <button class="btn btn-three-dots"><i class="bi bi-three-dots-vertical"></i></button>
-    </div>
+            <button class="btn btn-three-dots boton-nav text-white"><i class="bi bi-three-dots-vertical"></i></button>
+        </div>
 
-    <hr class="linea-task">
+        <hr class="linea-task">
 
-    <div class="container">
-        <button type="button" class="btn task-button" id="btn-add-task"><i class="bi bi-plus-circle"></i> Add
-            Task</button>
-        <div class="container add-task row" id="create-task">
-            <input type="text" placeholder="What are you working on?">
+        <div class="task-create-container">
+            <button type="button" class="btn task-button" id="btn-add-task"><i class="bi bi-plus-circle"></i> Add
+                Task</button>
+            <div class="container add-task row" id="create-task">
+                <input type="text" placeholder="What are you working on?">
 
-            <p>Est Pomodoros</p>
+                <p>Est Pomodoros</p>
 
-            <div class="col-12 d-flex">
-                <input type="number" class="form-control text-center quantity-pomodoros-input" value="1" min="1">
-                <button type="button" class="btn btn-up"><i class="bi bi-caret-up-fill"></i></button>
-                <button type="button" class="btn btn-down"><i class="bi bi-caret-down-fill"></i></button>
-            </div>
+                <div class="col-12 d-flex">
+                    <input type="number" class="form-control text-center quantity-pomodoros-input" value="1" min="1">
+                    <button type="button" class="btn btn-up"><i class="bi bi-caret-up-fill"></i></button>
+                    <button type="button" class="btn btn-down"><i class="bi bi-caret-down-fill"></i></button>
+                </div>
 
-            <div class="col-12 buttons-task-container">
-                <button type="button" class="btn btn-save-task" id="save-task">Save</button>
-                <button type="button" class="btn" id="cancel-task">Cancel</button>
+                <div class="col-12 buttons-task-container">
+                    <button type="button" class="btn btn-save-task" id="save-task">Save</button>
+                    <button type="button" class="btn" id="cancel-task">Cancel</button>
+                </div>
             </div>
         </div>
+
     </div>
+
+
+
+
 
     <script src="js/btn-reloj.js"></script>
     <script src="js/iniciar-cronometro.js"></script>
