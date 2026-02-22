@@ -24,17 +24,20 @@
                 <div class="button-nav-list-wrapper">
                     <ul class="navbar-nav flex-row button-nav-list">
                         <li class="nav-item">
-                            <a class="nav-link btn text-white boton-nav" href=""><i class="bi bi-bar-chart-fill"></i><span class="btn-text">Report</span></a>
+                            <a class="nav-link btn text-white boton-nav" href=""><i
+                                    class="bi bi-bar-chart-fill"></i><span class="btn-text">Report</span></a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link btn text-white boton-nav"><i class="bi bi-gear"></i><span class="btn-text">
-                                Setting</span></a>
+                            <a class="nav-link btn text-white boton-nav"><i class="bi bi-gear"></i><span
+                                    class="btn-text">
+                                    Setting</span></a>
                         </li>
 
                         <li class="nav-item" id="sing-in-item">
-                            <a class="nav-link btn text-white boton-nav" href="./sing-in.html"><i class="bi bi-person-circle"></i><span class="btn-text">
-                                Sing in</span></a>
+                            <a class="nav-link btn text-white boton-nav" href="./sing-in.html"><i
+                                    class="bi bi-person-circle"></i><span class="btn-text">
+                                    Sing in</span></a>
                         </li>
 
                         <li class="nav-item">
@@ -65,6 +68,24 @@
         </nav>
 
         <hr class="line">
+
+        <div class="container contenedor-reloj">
+            <div class="container contenedor-btn-reloj">
+                <button class="btn btn-contenedor-reloj" id="btn-pomodoro"><span class="pomodoro-text">Pomodoro</span></button>
+                <button class="btn btn-contenedor-reloj" id="btn-sbreak"><span class="short-break">Short Break</span></button>
+                <button class="btn btn-contenedor-reloj" id="btn-lbreak"><span class="long-break">Long Break</span></button>
+            </div>
+            
+            <div class="container container-numero-reloj">
+                <p class="cronometro-txt" id="tiempo">25:00</p>
+            </div>
+
+            <div class="container contenedor-btn-iniciar" id="contenedor-btn-iniciar">
+                <button class="btn btn-iniciar btn-iniciar-desactivado" id="btn-iniciar">START</button>
+                <button class="btn btn-omitir btn-invisible" id="btn-omitir"><i
+                        class="bi bi-skip-end-fill"></i></button>
+            </div>
+        </div>
 
     </div>
 

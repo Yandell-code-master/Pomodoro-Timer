@@ -4,13 +4,18 @@
     display: flex !important;
     align-items: center;
     justify-content: center;
-    padding: 6px 12px !important; /* El primer número da la altura, el segundo el ancho */
-    border-radius: 4px !important; /* Un radio pequeño los hace ver modernos pero "cuadrados" */
+    padding: 6px 12px !important;
+    /* El primer número da la altura, el segundo el ancho */
+    border-radius: 4px !important;
+    /* Un radio pequeño los hace ver modernos pero "cuadrados" */
     gap: 6px;
     border: none !important;
-    font-size: 13px; /* Tamaño de fuente equilibrado */
-    height: 32px;    /* Forzamos una altura fija para que todos sean iguales */
-    min-width: 40px; /* Evita que el botón de los puntos se colapse */
+    font-size: 13px;
+    /* Tamaño de fuente equilibrado */
+    height: 32px;
+    /* Forzamos una altura fija para que todos sean iguales */
+    min-width: 40px;
+    /* Evita que el botón de los puntos se colapse */
 }
 
 .boton-nav:hover {
@@ -21,7 +26,9 @@
 body {
     background: rgb(186, 73, 73);
     margin: 0;
-    overflow-x: hidden;
+    padding: 0;
+    overflow-x: hidden; /* Esto es vital */
+    width: 100vw; /* Asegura que el ancho sea el de la ventana */
 }
 
 
@@ -38,29 +45,33 @@ body {
 .line {
     margin-left: auto;
     margin-right: auto;
-    width: 100%;          
-    max-width: 620px;     
+    width: 100%;
+    max-width: 620px;
     margin-top: 7px;
-    opacity: 0.2;         
+    opacity: 0.2;
 }
 
 .contenedor-reloj {
-    background-color: rgb(229, 115, 115, 0.4);
-    height: 300px;
-    margin-left: 295px;
-    margin-top: 30px;
+    background-color: rgba(229, 115, 115, 0.4);
+    height: auto;
+    min-height: 200px; /* Reducido para móviles */
+    width: 95%; 
+    max-width: 480px; 
+    margin: 20px auto; /* Reducimos el margen superior */
+    padding: clamp(10px, 4vw, 20px); /* Padding flexible */
     border-radius: 7px;
     display: flex;
-    align-items: start;
-    justify-items: center;
-    position: relative;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; /* Evita que el contenido "empuje" hacia afuera */
 }
-
 .contenedor-btn-reloj {
-    margin-top: 14px;
-    margin-left: 76px;
+    width: 100%; /* Cambiado de 70% */
     display: flex;
-    gap: 0;
+    justify-content: center; /* Centra los botones */
+    flex-wrap: wrap; /* Si no caben, saltan de línea en lugar de desbordarse */
+    gap: 5px;
+    margin: 0 auto 15px auto;
 }
 
 .btn-contenedor-reloj {
@@ -99,20 +110,26 @@ body {
 
 .cronometro-txt {
     color: white;
-    font-size: 100px;
-    position: absolute;
-    top: 45px;
-    left: 110px;
+    font-size: clamp(60px, 25vw, 100px); 
+    text-align: center;
+    width: 100%;
+    margin: 20px 0;
     font-weight: bold;
-    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-        Roboto, Helvetica, Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    letter-spacing: -2px; 
+    font-family: 'Nunito', sans-serif;
 }
 
 .contenedor-btn-iniciar {
-    position: absolute;
-    top: 200px;
-    left: 135px;
+    width: 100%; /* Cambiado de 70% a 100% para poder centrar el contenido dentro */
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Ajusta según el espacio que desees */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container-numero-reloj {
+    width: 100%;
 }
 
 .btn-iniciar {
@@ -155,10 +172,14 @@ body {
     color: white;
     font-size: 40px;
     padding: 0;
-    padding-top: 0;
-    margin-left: 40px;
     border: none !important;
-    transition: all 0.3s ease;
+    background: none;
+    
+    /* Posicionamiento absoluto */
+    position: absolute; 
+    left: calc(50% + 110px); /* 50% (centro) + 110px (mitad del botón start + un margen) */
+    
+    transition: opacity 0.2s ease;
 }
 
 .btn-omitir:hover {
@@ -406,8 +427,8 @@ body {
 }
 
 .nav-configuration {
-    width: 100%;           
-    max-width: 620px;      
+    width: 100%;
+    max-width: 620px;
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
@@ -457,9 +478,62 @@ body {
     }
 }
 
+@media (max-width: 277px) {
+    .nav-configuration {
+        display: none;
+    }
+
+    .line {
+        display: none;
+    }
+}
+
+@media (max-width: 505px) {
+
+    .pomodoro-text,
+    .short-break,
+    .long-break {
+        font-size: 0;
+    }
+
+    .pomodoro-text::after {
+        content: "Pomo";
+        font-size: 16px;
+    }
+
+    .short-break::after {
+        content: "Short";
+        font-size: 16px;
+    }
+
+    .long-break::after {
+        content: "Long";
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 229px) {
+    .cronometro-txt {
+        font-size: 0px;
+    }
+
+    .cronometro-txt::after {
+        content: "25";
+        font-size: clamp(60px, 25vw, 100px);
+    }
+
+    .contenedor-btn-reloj {
+        display: none;
+    }
+
+    .contenedor-btn-iniciar {
+        display: none;
+    }
+}
+
 .button-nav-list {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
 }
