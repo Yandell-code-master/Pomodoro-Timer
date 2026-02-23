@@ -6,23 +6,23 @@ singUpEmailButon.addEventListener("click", async () => {
     const emailInput = document.getElementById("email-input");
     const passwordInput = document.getElementById("password-input");
     const logInDTO = {
-        email : emailInput.value,
-        password : passwordInput.value
+        email: emailInput.value,
+        password: passwordInput.value
     }
 
     let response = await fetch(URL_BACKEND, {
-        method : 'POST',
-        headers : {
-            'Content-Type' : 'application/json'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        body : JSON.stringify(logInDTO)
-    }) 
+        body: JSON.stringify(logInDTO)
+    })
 
     if (!response.ok) {
         throw new Error("Something went wrong trying to log in");
     }
-    
-    
+
+
 
     logInUser(await response.json());
 });
@@ -81,6 +81,48 @@ function logInUser(userData) {
     window.location.href = "http://localhost:8000/index.html";
 }
 
-function getTasksUser() {
+function renderGoogleButton() {
+    const container = document.getElementById('google-button-container');
+    const wrapper = document.querySelector('.btn-google-wrapper');
 
+    if (container && wrapper) {
+        let currentWidth = wrapper.offsetWidth;
+        container.innerHTML = ""; 
+
+        const isSmall = currentWidth < 210;
+        
+        // Definimos configuraciones distintas para evitar conflictos
+        const options = isSmall ? {
+            type: "icon",           // Modo cuadrado/círculo
+            shape: "square",        // 'square' suele cargar mejor el logo en iconos
+            theme: "outline",
+            size: "large"
+            // IMPORTANTE: En modo icon NO enviamos width, text ni logo_alignment
+        } : {
+            type: "standard",       // Modo largo con texto
+            shape: "rectangular",
+            theme: "outline",
+            text: "signin_with",
+            size: "large",
+            logo_alignment: "left",
+            width: currentWidth     // Solo aquí enviamos el ancho
+        };
+
+        console.log()
+
+        google.accounts.id.renderButton(container, options);
+    }
 }
+
+// Usamos una sola declaración para el resize con un pequeño retraso (debounce)
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(renderGoogleButton, 10);
+});
+
+// Además de cargar el script, llamamos a la función cuando Google Identity esté listo
+window.onload = () => {
+    // Si usas el script async, es mejor esperar un segundo a que google.accounts esté disponible
+    setTimeout(renderGoogleButton, 10);
+};
