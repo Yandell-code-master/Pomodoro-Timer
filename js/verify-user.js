@@ -26,7 +26,9 @@ async function loadUserInformation() {
     const user = JSON.parse(localStorage.getItem("userData"));
 
     // UI de navegación (tu código original)
-    listBtnNav.style.marginLeft = "211px";
+    listBtnNav.style.marginLeft = "auto";
+    listBtnNav.style.marginRight = "auto";
+
     singInItem.style.display = "none";
     logInItem.style.display = "none";
     threeDotsIcon.style.display = "none";
@@ -53,6 +55,11 @@ async function loadUserInformation() {
 async function fetchAndRenderTasks(userId) {
     const URL_TASKS = `http://localhost:8080/tasks/${userId}`;
 
+    if (getHostName() != "localhost") {
+        alert("To use this feature you have to download the full version");
+        throw new Error("To use this feature download the full version");
+    }
+
     try {
         const response = await fetch(URL_TASKS);
         if (!response.ok) throw new Error("Error al obtener tareas");
@@ -74,9 +81,9 @@ async function fetchAndRenderTasks(userId) {
 function renderTask(id, name, pomodoros, referenceElement) {
     let taskContainer = document.createElement('div');
     taskContainer.className = 'task-display';
-    
+
     // Agregamos el ID a los datos del elemento (buena práctica)
-    taskContainer.dataset.id = id; 
+    taskContainer.dataset.id = id;
 
     taskContainer.innerHTML = `
         <div class="task-display-content">
@@ -90,10 +97,10 @@ function renderTask(id, name, pomodoros, referenceElement) {
 
     // CORRECCIÓN: El selector debe coincidir con la clase del botón arriba
     const deleteBtn = taskContainer.querySelector('.btn-delete-task');
-    
+
     deleteBtn.addEventListener('click', async () => {
         // Llamamos a la función que borra en el servidor
-        const fueBorrado = await deleteTask(id); 
+        const fueBorrado = await deleteTask(id);
         if (fueBorrado) {
             taskContainer.remove(); // Quitamos de la vista
         }
@@ -105,8 +112,13 @@ function renderTask(id, name, pomodoros, referenceElement) {
 async function deleteTask(id) {
     const URL_BACKEND = `http://localhost:8080/tasks/${parseInt(id)}`;
 
+    if (getHostName() != "localhost") {
+        alert("To use this feature you have to download the full version");
+        throw new Error("To use this feature download the full version");
+    }
+
     const deletingTaskResponse = await fetch(URL_BACKEND, {
-        method : 'DELETE'
+        method: 'DELETE'
     })
 
     if (!deletingTaskResponse.ok) {

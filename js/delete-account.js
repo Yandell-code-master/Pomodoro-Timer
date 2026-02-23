@@ -2,13 +2,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const deleteAccountButon = document.getElementById("delete-account-dropdown-item");
 
     deleteAccountButon.addEventListener("click", async () => {
-        
-
         const user = JSON.parse(localStorage.getItem("userData"));
         const URL_BACKEND = `http://localhost:8080/users/${user.id}`;
 
+        if (getHostName() != "localhost") {
+            alert("To use this feature you have to download the full version");
+            throw new Error("To use this feature you have to download the full version");
+        }
+
         const delitingUserFetch = await fetch(URL_BACKEND, {
-            method : 'DELETE'
+            method: 'DELETE'
         })
 
         if (!delitingUserFetch.ok) {

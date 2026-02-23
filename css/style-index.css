@@ -422,8 +422,9 @@ body {
 .card-user-name {
     border: none;
     outline: none;
-    font-size: 25px;
-    width: 308px;
+    font-size: clamp(25px, 10vw, 40px);
+    max-width: 310px;
+    width: 80%;
     margin-bottom: 7px;
 }
 
@@ -432,8 +433,9 @@ body {
 }
 
 .card-information-img {
-    height: 100px;
-    width: 120px;
+    height: auto;
+    max-width: 120px;
+    width: 80%;
 }
 
 .card-information-img:hover {

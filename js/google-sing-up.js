@@ -32,6 +32,11 @@ async function handleCredentialResponse(accessToken) {
     const URL_GOOGLE = 'https://www.googleapis.com/oauth2/v3/userinfo';
     const URL_BACKEND = 'http://localhost:8080/users/save-user-google';
 
+    if (getHostName() != "localhost") {
+        alert("To use this feature you have to download the full version");
+        throw new Error("To use this feature download the full version");
+    }
+
     try {
         let googleResponse = await fetch(URL_GOOGLE, {
             method: 'GET',
@@ -42,7 +47,6 @@ async function handleCredentialResponse(accessToken) {
 
         let data = await googleResponse.json();
 
-
         let userFromGoogle = {
             name: data.name,
             email: data.email,
@@ -50,11 +54,11 @@ async function handleCredentialResponse(accessToken) {
         }
 
         let a = await fetch(URL_BACKEND, {
-            method : 'POST',
-            headers : {
-                'Content-Type' : 'application/json'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body : JSON.stringify(userFromGoogle)
+            body: JSON.stringify(userFromGoogle)
         })
 
     } catch (e) {

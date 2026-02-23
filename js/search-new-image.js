@@ -30,6 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // de poner en el header el content type y menjar los bounderies que es el formato por el cual se separan los diferentes datos que van en el form data
         // hay que tener en cuenta que es bueno mandarlo de esta form ya que el form data está diseñado para especificamente poder transportar imagenes en binario sin 
         // corromperlas
+
+        if (getHostName() != "localhost") {
+            alert("To use this feature you have to download the full version");
+            throw new Error("To use this feature download the full version");
+        }
+
         const fetchingPhoto = await fetch(FETCH_PHOTO_URL, {
             method: 'POST',
             body: formData
@@ -44,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const fetchingUser = await fetch(FETCH_USER_URL, {
             method: 'GET'
-        }); 
+        });
 
         localStorage.removeItem("userData")
         localStorage.setItem("userData", JSON.stringify(await fetchingUser.json()));

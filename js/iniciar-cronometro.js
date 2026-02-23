@@ -3,8 +3,6 @@ btnIniciar = document.getElementById("btn-iniciar");
 btnOmitir = document.getElementById("btn-omitir")
 
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("DOM listo 2");
-
     btnIniciar.addEventListener("click", function() {
         buttonSound = new Audio('resources/ui-click-43196.mp3');
         buttonSound.play();

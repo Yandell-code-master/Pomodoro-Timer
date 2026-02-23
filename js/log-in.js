@@ -10,6 +10,11 @@ singUpEmailButon.addEventListener("click", async () => {
         password: passwordInput.value
     }
 
+    if (getHostName() != "localhost") {
+        alert("To use this feature you have to download the full version");
+        throw new Error("To use this feature download the full version");
+    }
+
     let response = await fetch(URL_BACKEND, {
         method: 'POST',
         headers: {
@@ -21,8 +26,6 @@ singUpEmailButon.addEventListener("click", async () => {
     if (!response.ok) {
         throw new Error("Something went wrong trying to log in");
     }
-
-
 
     logInUser(await response.json());
 });
@@ -58,6 +61,11 @@ async function handleCredentialResponse(userToken) {
         }
     }
 
+    if (getHostName() != "localhost") {
+        alert("To use this feature you have to download the full version");
+        throw new Error("To use this feature download the full version");
+    }
+
     const response = await fetch(BACKEND_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -65,8 +73,6 @@ async function handleCredentialResponse(userToken) {
         },
         body: JSON.stringify(logInGoogleDTO)
     });
-
-
 
     if (!response.ok) {
         throw new Error("Something went wrong trying to log in");
@@ -87,10 +93,10 @@ function renderGoogleButton() {
 
     if (container && wrapper) {
         let currentWidth = wrapper.offsetWidth;
-        container.innerHTML = ""; 
+        container.innerHTML = "";
 
         const isSmall = currentWidth < 210;
-        
+
         // Definimos configuraciones distintas para evitar conflictos
         const options = isSmall ? {
             type: "icon",           // Modo cuadrado/círculo
@@ -107,8 +113,6 @@ function renderGoogleButton() {
             logo_alignment: "left",
             width: currentWidth     // Solo aquí enviamos el ancho
         };
-
-        console.log()
 
         google.accounts.id.renderButton(container, options);
     }

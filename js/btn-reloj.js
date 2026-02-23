@@ -3,8 +3,6 @@ btnIniciar = document.getElementById("btn-iniciar");
 btnOmitir = document.getElementById("btn-omitir");
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("El DOM está listo");
-
     btn1 = document.getElementById("btn-pomodoro");
     btn2 = document.getElementById("btn-sbreak");
     btn3 = document.getElementById("btn-lbreak");

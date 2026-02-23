@@ -11,6 +11,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             name: inputName.value
         }
 
+        if (getHostName() != "localhost") {
+            alert("To use this feature you have to download the full version");
+            throw new Error("To use this feature download the full version");
+        }
+
         const patchingUserResponse = await fetch(URL_BACKEND, {
             method: 'PATCH',
             headers: {

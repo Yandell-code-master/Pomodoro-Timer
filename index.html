@@ -22,7 +22,7 @@
                     <span class="btn-text-home">Pomofocus</span></a>
 
                 <div class="button-nav-list-wrapper">
-                    <ul class="navbar-nav flex-row button-nav-list">
+                    <ul class="navbar-nav flex-row button-nav-list" id="list-btn-nav">
                         <li class="nav-item">
                             <a class="nav-link btn text-white boton-nav" href=""><i
                                     class="bi bi-bar-chart-fill"></i><span class="btn-text">Report</span></a>
@@ -63,8 +63,39 @@
                             </div>
                         </li>
                     </ul>
+
+                    <!--Modal-->
+                    <div class="modal fade" id="account-information" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header border-0">
+                                    <h5 class="modal-title" id="exampleModalLabel">Account</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body row">
+                                    <div class="col-4">
+                                        <input type="file" style="display: none;" id="input-file">
+                                        <img alt="" id="card-information-img" class="card-information-img">
+                                    </div>
+
+                                    <div class="col-8">
+                                        <input type="text" id="user-name" class="card-user-name">
+                                        <hr class="card-line-information">
+                                        <h5></h5>
+                                    </div>
+                                </div>
+                                <div class=" modal-footer border-0">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" id="save-changes-buton">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </nav>
 
         <hr class="line">
@@ -134,11 +165,11 @@
 
     </div>
 
+    <script src="js/util.js"></script>
     <script src="js/btn-reloj.js"></script>
     <script src="js/iniciar-cronometro.js"></script>
     <script src="js/cambiar-tiempo.js"></script>
     <script src="js/add-task.js"></script>
-    <script src="./js/log-in.js"></script>
     <script src="js/verify-user.js"></script>
     <script src="js/log-out.js"></script>
     <script src="js/search-new-image.js"></script>

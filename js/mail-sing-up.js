@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const form = document.getElementById("email-form");
     const mailInput = document.getElementById("email-input");
 
@@ -13,6 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
             passwordHash: "",
             email: email,
             status: "PENDING"
+        }
+
+        if (getHostName() != "localhost") {
+            alert("To use this feature you have to download the full version");
+            throw new Error("To use this feature download the full version");
         }
 
         const response = await fetch(URL, {

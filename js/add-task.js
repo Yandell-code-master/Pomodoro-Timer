@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     btnSaveTask.addEventListener("click", async function () {
-        const URL_BACKEND = "http://localhost:8080/tasks"
+        const URL_BACKEND = "http://localhost:8080/tasks";
         let taskName = document.querySelector('.add-task input[type="text"]').value.trim();
         let pomodoros = numberInput.value;
         let jsonUser = localStorage.getItem("userData");
@@ -32,6 +32,12 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('Please enter a task name.');
             return;
         }
+
+        if (getHostName() != "localhost") {
+            alert("To use this feature you have to download the full version");
+            throw new Error("To use this feature you have to download the full version");
+        }
+
 
         const savingTaskResponse = await fetch(URL_BACKEND, {
             method: 'POST',
