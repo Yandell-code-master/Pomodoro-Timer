@@ -6,7 +6,7 @@ let btnLBreak = document.getElementById("btn-lbreak");
 
 let active = false;
 let interval = null;
-let tiempoInicial = "25:00"; // Guardamos el valor para resetear al terminar
+let tiempoInicial = "25:00";
 
 document.addEventListener("DOMContentLoaded", function () {
     btnIniciar.addEventListener("click", function () {
@@ -42,6 +42,9 @@ function restarTiempo() {
 
     // Lógica de término
     if (minutos === 0 && segundos === 0) {
+        const alarm = new Audio("../resources/alarm.mp3")
+        alarm.play();
+
         pausarCronometro();
         tiempo.innerText = tiempoInicial;
         cambiarNoPresionadoEstilo(btnIniciar);

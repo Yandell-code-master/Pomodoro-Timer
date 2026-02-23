@@ -27,8 +27,10 @@ body {
     background: rgb(186, 73, 73);
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Esto es vital */
-    width: 100vw; /* Asegura que el ancho sea el de la ventana */
+    overflow-x: hidden;
+    /* Esto es vital */
+    width: 100vw;
+    /* Asegura que el ancho sea el de la ventana */
 }
 
 
@@ -54,22 +56,26 @@ body {
 .contenedor-reloj {
     background-color: rgba(229, 115, 115, 0.4);
     height: auto;
-    min-height: 200px; /* Reducido para móviles */
-    width: 95%; 
-    max-width: 480px; 
-    margin: 20px auto; /* Reducimos el margen superior */
-    padding: clamp(10px, 4vw, 20px); /* Padding flexible */
+    min-height: 200px;
+    /* Reducido para móviles */
+    width: 95%;
+    max-width: 480px;
+    margin: 20px auto;
+    /* Reducimos el margen superior */
+    padding: clamp(10px, 4vw, 20px);
+    /* Padding flexible */
     border-radius: 7px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden; /* Evita que el contenido "empuje" hacia afuera */
+    overflow: hidden;
+    /* Evita que el contenido "empuje" hacia afuera */
 }
 
 .contenedor-btn-reloj {
-    width: 100%; 
+    width: 100%;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     flex-wrap: wrap;
     gap: 5px;
     margin: 0 auto 15px auto;
@@ -111,20 +117,22 @@ body {
 
 .cronometro-txt {
     color: white;
-    font-size: clamp(60px, 25vw, 100px); 
+    font-size: clamp(60px, 25vw, 100px);
     text-align: center;
     width: 100%;
     margin: 20px 0;
     font-weight: bold;
-    letter-spacing: -2px; 
+    letter-spacing: -2px;
     font-family: 'Nunito', sans-serif;
 }
 
 .contenedor-btn-iniciar {
-    width: 100%; /* Cambiado de 70% a 100% para poder centrar el contenido dentro */
+    width: 100%;
+    /* Cambiado de 70% a 100% para poder centrar el contenido dentro */
     display: flex;
     justify-content: center;
-    margin-top: 20px; /* Ajusta según el espacio que desees */
+    margin-top: 20px;
+    /* Ajusta según el espacio que desees */
     margin-left: auto;
     margin-right: auto;
 }
@@ -175,11 +183,12 @@ body {
     padding: 0;
     border: none !important;
     background: none;
-    
+
     /* Posicionamiento absoluto */
-    position: absolute; 
-    left: calc(50% + 110px); /* 50% (centro) + 110px (mitad del botón start + un margen) */
-    
+    position: absolute;
+    left: calc(50% + 110px);
+    /* 50% (centro) + 110px (mitad del botón start + un margen) */
+
     transition: opacity 0.2s ease;
 }
 
@@ -230,10 +239,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 95%;          
-    max-width: 480px;     
-    margin: 20px auto;      /* Centrado horizontal y margen vertical */
-    padding: 0;             /* Ajusta si necesitas espacio interno */
+    width: 95%;
+    max-width: 480px;
+    margin: 20px auto;
+    /* Centrado horizontal y margen vertical */
+    padding: 0;
+    /* Ajusta si necesitas espacio interno */
 }
 
 .three-dot-btn-nav {
@@ -287,8 +298,9 @@ body {
 .add-task {
     background-color: white;
     display: none;
-    width: 505px;
-    margin-left: 290px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 480px;
     height: 300px;
     border-radius: 7px;
     margin-bottom: 20px;
@@ -349,13 +361,15 @@ body {
 }
 
 .task-display {
-    margin-left: 303px;
     margin-top: 10px;
     margin-bottom: 20px;
-    padding: 10px;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 7px;
-    width: 503px;
+    max-width: 480px;
+    width: 95%;
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -371,6 +385,7 @@ body {
     color: white;
     border: none;
     border-radius: 5px;
+    margin-right: 10px;
     width: 40px;
     height: 40px;
     display: flex;
@@ -562,6 +577,10 @@ body {
         writing-mode: vertical-lr;
         font-size: 20px;
     }
+
+    .task-display {
+        display: none;
+    }
 }
 
 .button-nav-list {
@@ -580,4 +599,11 @@ body {
     height: auto;
     margin-right: 3px;
     margin-bottom: 4px;
+}
+
+.task-card {
+    display: block;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
 }
