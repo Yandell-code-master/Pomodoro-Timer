@@ -574,3 +574,10 @@ body {
 .task-create-container {
     width: 100%;
 }
+
+.dropdown-icon {
+    max-width: 15px;
+    height: auto;
+    margin-right: 3px;
+    margin-bottom: 4px;
+}

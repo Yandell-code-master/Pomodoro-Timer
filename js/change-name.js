@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const user = JSON.parse(localStorage.getItem("userData"));
-    const URL_BACKEND = `http://localhost:8080/users/${user.id}`;
     const inputName = document.getElementById("user-name");
     const saveChangesButton = document.getElementById("save-changes-buton");
 
     saveChangesButton.addEventListener("click", async e => {
         e.preventDefault();
+        const user = JSON.parse(localStorage.getItem("userData"));
+        const URL_BACKEND = `http://localhost:8080/users/${user.id}`;
 
         const userInfoToUpdate = {
             name: inputName.value
