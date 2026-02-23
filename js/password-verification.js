@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error("Something went wrong trying to change the password " + response);
         }
 
-        window.location.href = "http://localhost:8000/index.html";
+        window.location.href = "http://localhost:8000/log-in.html";
     });
 
     function verifyPassword(password) {
