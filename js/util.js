@@ -4,7 +4,7 @@ function getHostName() {
 
 // This is a function that make sure that the server is online in a very fast way
 async function checkServerStatus() {
-    const url = `${window.ENV.API_URL}ping`;
+    const url = `${window.ENV.API_URL}users/ping`;
 
     try {
         const controller = new AbortController();
