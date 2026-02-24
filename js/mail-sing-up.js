@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-
             if (!response.ok) {
                 throw new Error("SERVER_ERROR: " + response.status);
             }
