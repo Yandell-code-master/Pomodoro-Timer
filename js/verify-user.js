@@ -53,12 +53,7 @@ async function loadUserInformation() {
 
 // Función para traer y pintar las tareas
 async function fetchAndRenderTasks(userId) {
-    const URL_TASKS =  ENV.API_URL + `tasks/${userId}`;
-
-    if (!checkServerStatus()) {
-        alert("You can use this feature because the server is offline");
-        throw new Error("The server is offline");
-    }
+    const URL_TASKS = ENV.API_URL + `tasks/${userId}`;
 
     try {
         const response = await fetch(URL_TASKS);
@@ -74,7 +69,7 @@ async function fetchAndRenderTasks(userId) {
             renderTask(task.id, task.name, task.pomodoros, lineaTask);
         });
     } catch (error) {
-        console.error("No se pudieron cargar las tareas:", error);
+        console.error("The server didn't respond.");
     }
 }
 
@@ -112,20 +107,19 @@ function renderTask(id, name, pomodoros, referenceElement) {
 async function deleteTask(id) {
     const URL_BACKEND = ENV.API_URL + `tasks/${parseInt(id)}`;
 
-    if (!checkServerStatus()) {
-        alert("You can use this feature because the server is offline");
-        throw new Error("The server is offline");
+    try {
+        const deletingTaskResponse = await fetch(URL_BACKEND, {
+            method: 'DELETE'
+        })
+
+        if (!deletingTaskResponse.ok) {
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        alert("The server didn't respond.");
     }
-
-    const deletingTaskResponse = await fetch(URL_BACKEND, {
-        method: 'DELETE'
-    })
-
-    if (!deletingTaskResponse.ok) {
-        return false;
-    }
-
-    return true;
 }
 
 function loadDefaultIndex() {

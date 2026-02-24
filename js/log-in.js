@@ -10,24 +10,28 @@ singUpEmailButon.addEventListener("click", async () => {
         password: passwordInput.value
     }
 
-    if (!checkServerStatus()) {
-        alert("You can use this feature because the server is offline");
-        throw new Error("The server is offline");
+    try {
+        let logInFetch = await fetch(URL_BACKEND, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(logInDTO)
+        })
+
+        if (!logInFetch.ok) {
+            throw new Error("SERVER_ERROR: " + logInFetch.status);
+        }
+
+        logInUser(await logInFetch.json());
+    } catch (error) {
+        if (error.message.startsWith("SERVER_ERROR")) {
+            alert("Somthing went wrong trying to log in the user");
+        } else {
+            alert("The server didn't respond.")
+            throw new Error("The server didn't respond: " + error.message);
+        }
     }
-
-    let response = await fetch(URL_BACKEND, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(logInDTO)
-    })
-
-    if (!response.ok) {
-        throw new Error("Something went wrong trying to log in");
-    }
-
-    logInUser(await response.json());
 });
 
 function decodeJWT(token) {
@@ -59,11 +63,6 @@ async function handleCredentialResponse(userToken) {
             email: user.email,
             googleId: user.sub
         }
-    }
-
-    if (!checkServerStatus()) {
-        alert("You can use this feature because the server is offline");
-        throw new Error("The server is offline");
     }
 
     const response = await fetch(BACKEND_ENDPOINT, {

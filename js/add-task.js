@@ -33,24 +33,31 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (!checkServerStatus()) {
-            alert("You can use this feature because the server is offline");
-            throw new Error("The server is offline");
+        try {
+            const savingTaskResponse = await fetch(URL_BACKEND, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(task)
+            })
+
+            if (!savingTaskResponse.ok) {
+                throw new Error("SERVER_ERROR: " + savingTaskResponse.status);
+            }
+
+            const taskSaved = await savingTaskResponse.json();
+            const lineaTask = document.querySelector('.linea-task');
+
+            renderTask(taskSaved.id, taskSaved.name, taskSaved.pomodoros, lineaTask);
+        } catch (error) {
+            if (error.message.startsWith("SERVER_ERROR")) {
+                alert("Something went wrong trying to save the task (The server responded with an error).");
+            } else {
+                alert("The server didn't respond.");
+                throw new Error("The server didn't respond: " + error);
+            }
         }
-
-
-        const savingTaskResponse = await fetch(URL_BACKEND, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(task)
-        })
-
-        const taskSaved = await savingTaskResponse.json();
-        const lineaTask = document.querySelector('.linea-task');
-
-        renderTask(taskSaved.id, taskSaved.name, taskSaved.pomodoros, lineaTask);
     });
 
     btnCacelTask.addEventListener("click", function () {

@@ -32,18 +32,17 @@ async function handleCredentialResponse(accessToken) {
     const URL_GOOGLE = 'https://www.googleapis.com/oauth2/v3/userinfo';
     const URL_BACKEND = ENV.API_URL + 'users/save-user-google';
 
-    if (!checkServerStatus()) {
-        alert("You can use this feature because the server is offline");
-        throw new Error("The server is offline");
-    }
-
     try {
         let googleResponse = await fetch(URL_GOOGLE, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
-        })
+        });
+
+        if (!googleResponse.ok) {
+            throw new Error("GOOGLE_API_ERROR: " + googleResponse.status);
+        }
 
         let data = await googleResponse.json();
 
@@ -53,7 +52,7 @@ async function handleCredentialResponse(accessToken) {
             googleId: data.sub
         }
 
-        let a = await fetch(URL_BACKEND, {
+        let savingUserFetch = await fetch(URL_BACKEND, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +60,16 @@ async function handleCredentialResponse(accessToken) {
             body: JSON.stringify(userFromGoogle)
         })
 
-    } catch (e) {
-        console.log("Someting went with the API petition");
+        if (!savingUserFetch.ok) {
+            throw new ("SERVER_ERROR: " + savingUserFetch.status);
+        }
+    } catch (error) {
+        if (error.message.startsWith("GOOGLE_API_ERROR") === "GOOGLE_API_ERROR") {
+            alert("Something went wrong trying to fetch de identity from the google API.");
+        } else if (error.message.startsWith("SERVER_ERROR") === "SERVER_ERROR") {
+            alert("Something went wrong tyring to save the new user.")
+        } else {
+            alert("The server didn't respond.");
+        }
     }
 }

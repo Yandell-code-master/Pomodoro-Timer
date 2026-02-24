@@ -14,24 +14,26 @@ document.addEventListener("DOMContentLoaded", () => {
             status: "PENDING"
         }
 
-        console.log("HOla")
+        try {
+            const response = await fetch(URL, {
+                method: 'POST',
+                body: JSON.stringify(userFromEmail),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
-        if (!checkServerStatus()) {
-            console.log("Hola")
-            alert("You can use this feature because the server is offline");
-            throw new Error("The server is offline");
-        }
 
-        const response = await fetch(URL, {
-            method: 'POST',
-            body: JSON.stringify(userFromEmail),
-            headers: {
-                'Content-Type': 'application/json'
+            if (!response.ok) {
+                throw new Error("SERVER_ERROR: " + response.status);
             }
-        });
-
-        if (!response.ok) {
-            throw new Error("Something went wrong trying to sing up");
+        } catch (error) {
+            if (error.message.startsWith("SERVER_ERROR") === "SERVER_ERROR") {
+                alert("Something went wrong trying to sign up (The server responded with an error).");
+            } else {
+                alert("The server didn't respond.");
+                throw new Error("The server didn't respond: " + error);
+            }
         }
 
         mailInput.value = "";

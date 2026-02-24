@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const passwordTextField = document.getElementById("password-textfield");
         const passwordConfirmationTextField = document.getElementById("password-confirm-textfield");
         const warningText = document.getElementById("warning-text");
-        const URL =  ENV.API_URL + "users/set-password";
+        const URL = ENV.API_URL + "users/set-password";
         const data = {
             password: passwordTextField.value,
             token: getToken()
@@ -24,24 +24,28 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (!checkServerStatus()) {
-            alert("You can use this feature because the server is offline");
-            throw new Error("The server is offline");
-        }
+        try {
+            let response = await fetch(URL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
-        let response = await fetch(URL, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
+
+            if (!response.ok) {
+                throw new Error("SERVER_ERROR: " + response.status);
             }
-        });
 
-        if (!response.ok) {
-            throw new Error("Something went wrong trying to change the password " + response);
+            window.location.href = "http://localhost:8000/log-in.html";
+        } catch (error) {
+            if (error.message.startsWith("SERVER_ERROR")) {
+                alert("Something went wrong trying to set the new password");
+            } else {
+                alert("The server didn't respond");
+            }
         }
-
-        window.location.href = "http://localhost:8000/log-in.html";
     });
 
     function verifyPassword(password) {

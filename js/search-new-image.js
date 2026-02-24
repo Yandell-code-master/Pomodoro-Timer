@@ -31,28 +31,37 @@ document.addEventListener("DOMContentLoaded", () => {
         // hay que tener en cuenta que es bueno mandarlo de esta form ya que el form data está diseñado para especificamente poder transportar imagenes en binario sin 
         // corromperlas
 
-        if (!checkServerStatus()) {
-            alert("You can use this feature because the server is offline");
-            throw new Error("The server is offline");
+        try {
+            const fetchingPhoto = await fetch(FETCH_PHOTO_URL, {
+                method: 'POST',
+                body: formData
+            });
+
+            // Putting the photo in src image
+            profileImage.src = await fetchingPhoto.text();
+
+            const fetchingUser = await fetch(FETCH_USER_URL, {
+                method: 'GET'
+            });
+
+            if (!fetchingPhoto.ok) {
+                throw new Error("SERVER_ERROR_PHOTO: " + fetchingPhoto.status);
+            }
+
+            if (!fetchingUser.ok) {
+                throw new Error("SERVER_ERROR_USER: " + fetchingUser.status);
+            }
+
+            localStorage.removeItem("userData")
+            localStorage.setItem("userData", JSON.stringify(await fetchingUser.json()));
+        } catch (error) {
+            if (error.name.startsWith("SERVER_ERROR_PHOTO")) {
+                alert("Something went wrong trying to save your photo");
+            } else if (error.name.startsWith("SERVER_ERROR_USER")) {
+                alert("Something went wrong tyring to get the new user");
+            } else {
+                alert("The server didn't respond");
+            }
         }
-
-        const fetchingPhoto = await fetch(FETCH_PHOTO_URL, {
-            method: 'POST',
-            body: formData
-        });
-
-        if (!fetchingPhoto.ok) {
-            throw new Error("Something went wrong trying to upload the image");
-        }
-
-        // Putting the photo in src image
-        profileImage.src = await fetchingPhoto.text();
-
-        const fetchingUser = await fetch(FETCH_USER_URL, {
-            method: 'GET'
-        });
-
-        localStorage.removeItem("userData")
-        localStorage.setItem("userData", JSON.stringify(await fetchingUser.json()));
     }
 });
