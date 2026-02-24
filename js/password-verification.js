@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("SERVER_ERROR: " + response.status);
             }
 
-            window.location.href = ENV.API_URL + "log-in.html";
+            window.location.href = ENV.URL_FRONTEND + "log-in.html";
         } catch (error) {
             if (error.message.startsWith("SERVER_ERROR")) {
                 alert("Something went wrong trying to set the new password");

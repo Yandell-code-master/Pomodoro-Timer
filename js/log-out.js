@@ -4,6 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     logOutDropDownItem.addEventListener("click", () => {
         localStorage.removeItem("userData");
         localStorage.removeItem("isLoged");
-        window.location.href = ENV.API_URL + "index.html";
+        window.location.href = ENV.URL_FRONTEND + "index.html";
     });
 });

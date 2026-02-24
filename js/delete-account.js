@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             localStorage.removeItem("userData");
             localStorage.removeItem("isLoged");
-            window.location.href = ENV.API_URL + "index.html";
+            window.location.href = ENV.URL_FRONTEND + "index.html";
         } catch {
             if (error.message.startsWith("SERVER_ERROR")) {
                 alert("Something went wrong trying to sign up (The server responded with an error).");
