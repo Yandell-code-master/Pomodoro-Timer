@@ -5,15 +5,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     saveChangesButton.addEventListener("click", async e => {
         e.preventDefault();
         const user = JSON.parse(localStorage.getItem("userData"));
-        const URL_BACKEND = `http://localhost:8080/users/${user.id}`;
+        const URL_BACKEND = ENV.API_URL + `users/${user.id}`;
 
         const userInfoToUpdate = {
             name: inputName.value
         }
 
-        if (getHostName() != "localhost") {
-            alert("To use this feature you have to download the full version");
-            throw new Error("To use this feature download the full version");
+        if (!checkServerStatus()) {
+            alert("You can use this feature because the server is offline");
+            throw new Error("The server is offline");
         }
 
         const patchingUserResponse = await fetch(URL_BACKEND, {

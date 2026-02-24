@@ -23,17 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function uploadToServer(formData) {
         const user = JSON.parse(localStorage.getItem("userData"));
-        const FETCH_PHOTO_URL = `http://localhost:8080/users/${user.id}/photo`;
-        const FETCH_USER_URL = `http://localhost:8080/users/email-type/${user.id}`;
+        const FETCH_PHOTO_URL = ENV.API_URL + `users/${user.id}/photo`;
+        const FETCH_USER_URL = ENV.API_URL + `users/email-type/${user.id}`;
 
         // Cuando nosotros le pasamos un form data a un fetch en el body este sobreentiendo que el tipo de body es multipart entonces lo que hace es manejar todo la lógica 
         // de poner en el header el content type y menjar los bounderies que es el formato por el cual se separan los diferentes datos que van en el form data
         // hay que tener en cuenta que es bueno mandarlo de esta form ya que el form data está diseñado para especificamente poder transportar imagenes en binario sin 
         // corromperlas
 
-        if (getHostName() != "localhost") {
-            alert("To use this feature you have to download the full version");
-            throw new Error("To use this feature download the full version");
+        if (!checkServerStatus()) {
+            alert("You can use this feature because the server is offline");
+            throw new Error("The server is offline");
         }
 
         const fetchingPhoto = await fetch(FETCH_PHOTO_URL, {

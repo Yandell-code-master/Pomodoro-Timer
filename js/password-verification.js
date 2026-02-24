@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const passwordTextField = document.getElementById("password-textfield");
         const passwordConfirmationTextField = document.getElementById("password-confirm-textfield");
         const warningText = document.getElementById("warning-text");
-        const URL = "http://localhost:8080/users/set-password";
+        const URL =  ENV.API_URL + "users/set-password";
         const data = {
             password: passwordTextField.value,
             token: getToken()
@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (getHostName() != "localhost") {
-            alert("To use this feature you have to download the full version");
-            throw new Error("To use this feature download the full version");
+        if (!checkServerStatus()) {
+            alert("You can use this feature because the server is offline");
+            throw new Error("The server is offline");
         }
 
         let response = await fetch(URL, {

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", async event => {
         event.preventDefault();
-        const URL = "http://localhost:8080/users/save-user-email";
+        const URL = ENV.API_URL + "users/save-user-email";
         const email = mailInput.value;
 
         const userFromEmail = {
@@ -14,9 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
             status: "PENDING"
         }
 
-        if (getHostName() != "localhost") {
-            alert("To use this feature you have to download the full version");
-            throw new Error("To use this feature download the full version");
+        if (!checkServerStatus()) {
+            alert("You can use this feature because the server is offline");
+            throw new Error("The server is offline");
         }
 
         const response = await fetch(URL, {

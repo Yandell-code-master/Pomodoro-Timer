@@ -30,11 +30,11 @@ document.addEventListener("DOMContentLoaded", event => {
 
 async function handleCredentialResponse(accessToken) {
     const URL_GOOGLE = 'https://www.googleapis.com/oauth2/v3/userinfo';
-    const URL_BACKEND = 'http://localhost:8080/users/save-user-google';
+    const URL_BACKEND = ENV.API_URL + 'users/save-user-google';
 
-    if (getHostName() != "localhost") {
-        alert("To use this feature you have to download the full version");
-        throw new Error("To use this feature download the full version");
+    if (!checkServerStatus()) {
+        alert("You can use this feature because the server is offline");
+        throw new Error("The server is offline");
     }
 
     try {

@@ -2,7 +2,7 @@ const singUpEmailButon = document.getElementById("sing-up-email-buton");
 
 singUpEmailButon.addEventListener("click", async () => {
     event.preventDefault();
-    const URL_BACKEND = "http://localhost:8080/users/log-in-email";
+    const URL_BACKEND = ENV.API_URL + "users/log-in-email";
     const emailInput = document.getElementById("email-input");
     const passwordInput = document.getElementById("password-input");
     const logInDTO = {
@@ -10,9 +10,9 @@ singUpEmailButon.addEventListener("click", async () => {
         password: passwordInput.value
     }
 
-    if (getHostName() != "localhost") {
-        alert("To use this feature you have to download the full version");
-        throw new Error("To use this feature download the full version");
+    if (!checkServerStatus()) {
+        alert("You can use this feature because the server is offline");
+        throw new Error("The server is offline");
     }
 
     let response = await fetch(URL_BACKEND, {
@@ -46,7 +46,7 @@ function decodeJWT(token) {
 }
 
 async function handleCredentialResponse(userToken) {
-    const BACKEND_ENDPOINT = "http://localhost:8080/users/log-in-google"
+    const BACKEND_ENDPOINT = ENV.API_URL + "users/log-in-google"
     let user = decodeJWT(userToken.credential);
 
     let logInGoogleDTO = {
@@ -61,9 +61,9 @@ async function handleCredentialResponse(userToken) {
         }
     }
 
-    if (getHostName() != "localhost") {
-        alert("To use this feature you have to download the full version");
-        throw new Error("To use this feature download the full version");
+    if (!checkServerStatus()) {
+        alert("You can use this feature because the server is offline");
+        throw new Error("The server is offline");
     }
 
     const response = await fetch(BACKEND_ENDPOINT, {

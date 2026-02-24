@@ -53,11 +53,11 @@ async function loadUserInformation() {
 
 // Función para traer y pintar las tareas
 async function fetchAndRenderTasks(userId) {
-    const URL_TASKS = `http://localhost:8080/tasks/${userId}`;
+    const URL_TASKS =  ENV.API_URL + `tasks/${userId}`;
 
-    if (getHostName() != "localhost") {
-        alert("To use this feature you have to download the full version");
-        throw new Error("To use this feature download the full version");
+    if (!checkServerStatus()) {
+        alert("You can use this feature because the server is offline");
+        throw new Error("The server is offline");
     }
 
     try {
@@ -110,11 +110,11 @@ function renderTask(id, name, pomodoros, referenceElement) {
 }
 
 async function deleteTask(id) {
-    const URL_BACKEND = `http://localhost:8080/tasks/${parseInt(id)}`;
+    const URL_BACKEND = ENV.API_URL + `tasks/${parseInt(id)}`;
 
-    if (getHostName() != "localhost") {
-        alert("To use this feature you have to download the full version");
-        throw new Error("To use this feature download the full version");
+    if (!checkServerStatus()) {
+        alert("You can use this feature because the server is offline");
+        throw new Error("The server is offline");
     }
 
     const deletingTaskResponse = await fetch(URL_BACKEND, {
