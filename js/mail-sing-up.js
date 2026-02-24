@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("SERVER_ERROR: " + response.status);
             }
         } catch (error) {
-            if (error.message.startsWith("SERVER_ERROR") === "SERVER_ERROR") {
+            if (error.message.startsWith("SERVER_ERROR")) {
                 alert("Something went wrong trying to sign up (The server responded with an error).");
             } else {
                 alert("The server didn't respond.");
