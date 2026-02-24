@@ -83,7 +83,7 @@ async function handleCredentialResponse(userToken) {
 function logInUser(userData) {
     localStorage.setItem("isLoged", "true");
     localStorage.setItem("userData", JSON.stringify(userData))
-    window.location.href = "http://localhost:8000/index.html";
+    window.location.href = ENV.API_URL + "index.html";
 }
 
 function renderGoogleButton() {

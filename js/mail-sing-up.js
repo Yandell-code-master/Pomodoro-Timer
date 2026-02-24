@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             mailInput.value = "";
-            window.location.href = "http://localhost:8000/activate-page.html";
+            window.location.href = ENV.API_URL + "activate-page.html";
         } catch (error) {
             if (error.message.startsWith("SERVER_ERROR")) {
                 alert("Something went wrong trying to sign up (The server responded with an error).");
