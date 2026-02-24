@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
                 throw new Error("SERVER_ERROR: " + response.status);
             }
+
+            mailInput.value = "";
+            window.location.href = "http://localhost:8000/activate-page.html";
         } catch (error) {
             if (error.message.startsWith("SERVER_ERROR")) {
                 alert("Something went wrong trying to sign up (The server responded with an error).");
@@ -34,8 +37,5 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("The server didn't respond: " + error);
             }
         }
-
-        mailInput.value = "";
-        window.location.href = "http://localhost:8000/activate-page.html";
     });
 });
