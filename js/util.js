@@ -10,7 +10,10 @@ async function checkServerStatus() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-        const response = await fetch(url, { signal: controller.signal });
+        const response = await fetch(url, { 
+            method : 'GET',
+            signal: controller.signal 
+        });
         clearTimeout(timeoutId);
 
         return true;

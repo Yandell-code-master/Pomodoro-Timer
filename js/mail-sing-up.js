@@ -14,7 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
             status: "PENDING"
         }
 
+        console.log("HOla")
+
         if (!checkServerStatus()) {
+            console.log("Hola")
             alert("You can use this feature because the server is offline");
             throw new Error("The server is offline");
         }
