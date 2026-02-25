@@ -1,0 +1,43 @@
+# el docker compose lo que hace es indicar que imagenes debe de usar para crear los diferenetes contenedores y como se deben crear estos 
+# servicios ademas como se deben comunicar entre sí
+
+# por lo que aquí lo que vamos a hacer es tambien poner para que cree un contenedor de la imagen que acabamos de hacer en el Dockerfile
+
+# hay que tener en cuenta que los contenedores son efimeros, por lo tanto lo que se cree dentro del mismo desaparecera con el, 
+# ahí es donde entrar los volumenes. Son directorios fuera del contenedor de forma que puenden persistir, los volumenes se crean 
+# en una zona especial que docker administra automaticamente
+version: '3.8'
+services:
+  app: 
+    build: . # lo que hace es buscar en el directorio actual el Dockerfile
+    container_name: pomodoro_app 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db       
+    restart: on-failure
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://sql-server.railway.internal:1433;databaseName=master;encrypt=false;
+      - SPRING_DATASOURCE_USERNAME=sa
+      - ACCEPT_EULA=Y
+      - SPRING_DATASOURCE_PASSWORD=TuPasswordSeguro123!
+      - APP_JWT_SECRET=SwDxcS4inPNnZTdMYXX7VLSoCixjg4jNS2i7oKFfsm9pyg5ufTuj7wFOorXE
+      - APP_GOOGLE_CLIENT_ID=913993571162-hirk98knfjtejttd92udhug2v0kqrp3r.apps.googleusercontent.com
+      - CLOUDINARY_URL=cloudinary://231678114518974:Chy6D46tANDR9lM9unJdtFbnEaE@ddzgtekra
+      - RESEND_API_KEY=re_XMhGdNnV_2tmHcrRVV41PqUCDK5bYAU3o
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_server_container
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=TuPasswordSeguro123!
+      - MSSQL_PID=Express
+    volumes:
+      - sql_data:/var/opt/mssql #  conectamos el voluem sql_data al lugar en donde estan los archivos de la bd en el contenedor
+
+# esto sirve para crear el volumen cuando se ejecuta por primera vez, y luego sirve para que todos los servicios puedan usar este
+# voluemn sin problema
+volumes:
+  sql_data:
